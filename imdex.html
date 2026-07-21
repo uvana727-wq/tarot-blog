@@ -1,27 +1,162 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" contemt="width=device-width,initial-scale=1.0"
-   <tittle>Мой сайт из Termux</tittle>
-   <style>
-     body { 
-        font-family: Arial , sans-serif;
-        background-color: #2c3e50;
-        color: #ecf0f1;
-        text-align: cemter;
-        padding-top: 50px;
-      }
-      h1 { color: #1avc9c; }
-    </style>
-  </head>
-  <body>
-     <h1>Привет из Termux
-     <p>этот сацт работает на моем телефоне.</p>
-     </body>
-     </html
-     
-     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мистический Блог Таро</title>
+    <style>
+        :root {
+            --bg-color: #0d0b18;
+            --card-bg: #1a162b;
+            --accent-gold: #f39c12;
+            --text-color: #e0d9f6;
+            --text-muted: #a29bfe;
+        }
 
-     
-   
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--accent-gold);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            color: var(--accent-gold);
+            border-bottom: 1px solid rgba(243, 156, 18, 0.3);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        /* Анимация карты */
+        .tarot-card-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .tarot-card {
+            width: 160px;
+            height: 270px;
+            background: linear-gradient(135deg, #2c2243, #150d2a);
+            border: 2px solid var(--accent-gold);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .tarot-card img {
+            max-width: 80%;
+            max-height: 70%;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>✨ Блог Таро ✨</h1>
+        <div class="subtitle">Погружение в таинственный мир символов и предсказаний</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="tarot-card-container">
+            <div class="tarot-card">
+                <img src="star.jpg" alt="Карта Звезда" onerror="this.style.display='none'">
+                <div class="card-title">⭐ Звезда</div>
+            </div>
+        </div>
+
+        <div class="card-section">
+            <h2>📜 История Карт Таро</h2>
+            <p>
+                История карт Таро окутана множеством легенд и тайн. Вопреки распространенному мнению, изначально Таро возникли не как инструмент магии или гадания, а как карточная игра для аристократии.
+            </p>
+            <p>
+                <strong>Основные вехи истории:</strong>
+            </p>
+            <ul>
+                <li><strong>XV век (Италия):</strong> Первые известные колоды появились в Северной Италии. Их изготавливали вручную для богатых семей и использовали для игры в <em>Tarocchi</em>.</li>
+                <li><strong>XVIII век (Франция):</strong> Исследователи и оккультисты разглядели в картах древний символизм и адаптировали их для предсказаний.</li>
+                <li><strong>XX век (Модерн):</strong> В 1909 году Артур Уэйт и художница Памела Колман Смит создали знаменитую колоду <strong>Райдера-Уэйта</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="card-section">
+            <h2>🔮 Карта Дня: Звезда</h2>
+            <p>
+                Карта <strong>«Звезда»</strong> символизирует надежду, вдохновение, гармонию и веру в лучшее будущее. Она напоминает о том, что после любой бури наступает период спокойствия и исцеления.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Блог Таро | Создано с помощью Termux & GitHub</p>
+    </footer>
+
+</body>
+</html>
