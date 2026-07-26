@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мистический Блог Таро</title>
     <style>
+        :root {
+            --bg-color: #06040a;
+            --card-bg: #110d21;
+            --accent-gold: #f1c40f;
+            --text-color: #dcd6f7;
+            --text-muted: #8d85b5;
+        }
+
         body {
-            background-color: #080612;
-            color: #d1c9f0;
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -16,76 +24,95 @@
             align-items: center;
         }
 
-        h1 {
-            color: #f1c40f;
+        header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--accent-gold);
+            font-size: 2.2rem;
             margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
         }
 
         .subtitle {
-            color: #8e85b5;
-            text-align: center;
-            margin-bottom: 25px;
+            color: var(--text-muted);
             font-style: italic;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
         }
 
-        .card-box {
-            background: #130f26;
-            border: 1px solid #f1c40f;
+        .card-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(241, 196, 15, 0.2);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
         }
 
         h2 {
-            color: #f1c40f;
-            margin-top: 0;
-            border-bottom: 1px solid rgba(241, 196, 15, 0.3);
+            color: var(--accent-gold);
+            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
             padding-bottom: 8px;
-        }
-
-        .tarot-display {
-            text-align: center;
-            background: #1c1638;
-            border: 2px solid #f1c40f;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .tarot-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        .tarot-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #f1c40f;
+            margin-top: 0;
         }
 
         p, li {
             line-height: 1.6;
         }
 
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Карточка дня */
+        .tarot-display {
+            text-align: center;
+            background: linear-gradient(135deg, #1a1333, #090614);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.15);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .tarot-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .tarot-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
         footer {
             margin-top: 30px;
-            color: #6c63ff;
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
             text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <h1>✨ Блог Таро ✨</h1>
-    <div class="subtitle">Мудрость арканов каждый день</div>
+    <header>
+        <h1>✨ Мистический Блог Таро ✨</h1>
+        <div class="subtitle">Мудрость арканов каждый день</div>
+    </header>
 
     <div class="container">
 
@@ -94,46 +121,65 @@
             <div class="tarot-title" id="cardTitle">Карта Дня</div>
         </div>
 
-        <div class="card-box">
-            <h2>🔮 Описание Карты Дня</h2>
-            <p id="cardDesc">Загрузка...</p>
+        <div class="card-section">
+            <h2 id="cardHeader">🔮 Толкование Карты Дня</h2>
+            <p id="cardDesc">Загрузка предсказания...</p>
         </div>
 
-        <div class="card-box">
+        <div class="card-section">
+            <h2>🃏 Мои Любимые Расклады</h2>
+            <ul>
+                <li><strong>«Три карты» (Прошлое / Настоящее / Будущее):</strong> Простой и эффективный расклад для быстрого анализа любой жизненной ситуации.</li>
+                <li><strong>«Крест»:</strong> Помогает разобраться в сложных проблемах, показывает препятствия и вероятный исход события.</li>
+                <li><strong>«Выбор»:</strong> Идеально подходит, когда вы стоите на распутье двух жизненных решений.</li>
+                <li><strong>«Совет карт»:</strong> Экспресс-расклад из одной карты для получения мудрого ориентира на день.</li>
+            </ul>
+        </div>
+
+        <div class="card-section">
             <h2>📜 История Карт Таро</h2>
             <p>
-                Изначально Таро возникли в XV веке в Италии как игра для аристократов (Tarocchi). Лишь к XVIII веку французские оккультисты увидели в них глубокий символизм и стали использовать для предсказаний.
+                История карт Таро окутана множеством легенд и тайн. Вопреки распространенному мнению, изначально Таро возникли не как инструмент магии или гадания, а как карточная игра для аристократии.
+            </p>
+            <p>
+                <strong>Основные вехи истории:</strong>
             </p>
             <ul>
-                <li><strong>XV век:</strong> Первые колоды ручной работы (Висконти-Сфорца).</li>
-                <li><strong>XVIII век:</strong> Развитие системы предсказаний (Эттейлла, Жебелен).</li>
-                <li><strong>XX век:</strong> Создание классической колоды Райдера-Уэйта (1909 год).</li>
+                <li><strong>XV век (Италия):</strong> Первые известные колоды (например, Таро Висконти-Сфорца) появились в Северной Италии для игры в <em>Tarocchi</em>.</li>
+                <li><strong>XVIII век (Франция):</strong> Исследователи и оккультисты разглядели в картах древний символизм и адаптировали их для предсказаний.</li>
+                <li><strong>XX век (Модерн):</strong> В 1909 году Артур Уэйт и художница Памела Колман Смит создали знаменитую классическую колоду <strong>Райдера-Уэйта</strong>.</li>
             </ul>
         </div>
 
     </div>
 
     <footer>
-        © 2026 Блог Таро | Termux & GitHub Pages
+        <p>© 2026 Блог Таро | Создано с помощью Termux & GitHub</p>
     </footer>
 
     <script>
-        const cards = [
-            { title: "⭐ Звезда", icon: "⭐", desc: "Символ надежды, вдохновения и исцеления. Буря позади, впереди светлый путь." },
-            { title: "☀️ Солнце", icon: "☀️", desc: "Радость, успех и ясность. Отличный день для реализации идей и общения." },
-            { title: "🌙 Луна", icon: "🌙", desc: "Время интуиции и тайн. Не спешите с решениями и доверяйте внутреннему чутью." },
-            { title: "🎡 Колесо Фортуны", icon: "🎡", desc: "Поворот судьбы и новые возможности. Перемены уже на пороге!" },
-            { title: "🧙‍♂️ Маг", icon: "🧙‍♂️", desc: "Сила воли и мастерство. У вас есть все ресурсы для достижения цели." }
+        // Полный список всех 22 Старших Арканов Таро (от 0 до 21)
+        const majorArcana = [
+            { number: "0", title: "0. Дурак (Шут)", icon: "🃏", desc: "Символ новых начинаний, чистого листа, доверия вселенной и смелого шага в неизвестность." },
+            { number: "1", title: "I. Маг", icon: "🧙‍♂️", desc: "Сила воли, мастерство, изобретательность. У вас есть все ресурсы, чтобы реализовать свои идеи." },
+            { number: "2", title: "II. Жрица", icon: "🌙", desc: "Интуиция, тайные знания, внутренний голос. Время слушать ощущения и не торопить события." },
+            { number: "3", title: "III. Императрица", icon: "👑", desc: "Изобилие, творчество, гармония и природа. Период расцвета, заботы и новых проектов." },
+            { number: "4", title: "IV. Император", icon: "🏛️", desc: "Структура, порядок, стабильность и лидерство. Время брать контроль в свои руки." },
+            { number: "5", title: "V. Иерофант", icon: "📜", desc: "Мудрость, традиции, обучение и моральные ценности. Время обращения к знаниям." },
+            { number: "6", title: "VI. Влюбленные", icon: "Союз, выбор, гармония отношений и искренность чувств." },
+            { number: "7", title: "VII. Колесница", icon: "🏎️", desc: "Целеустремленность, победа над препятствиями и движение вперед на полной скорости." },
+            { number: "8", title: "VIII. Сила", icon: "🦁", desc: "Внутренняя стойкость, мягкое терпение, самообладание и сдерживание страстей." },
+            { number: "9", title: "IX. Отшельник", icon: "🕯️", desc: "Самоанализ, мудрость, переосмысление и поиск истины в тишине и уединении." },
+            { number: "10", title: "X. Колесо Фортуны", icon: "🎡", desc: "Цикличность жизни, повороты судьбы, удача и неизбежные перемены к лучшему." },
+            { number: "11", title: "XI. Справедливость", icon: "⚖️", desc: "Честность, объективность, закон причин и следствий. Справедливый исход." },
+            { number: "12", title: "XII. Повешенный", icon: "🙃", desc: "Новый взгляд на вещей, пауза, добровольная жертва ради переосмысления." },
+            { number: "13", title: "XIII. Смерть", icon: "🦋", desc: "Завершение старого этапа и трансформационные перемены. Освобождение места для нового." },
+            { number: "14", title: "XIV. Умеренность", icon: "🕊️", desc: "Баланс, гармония, исцеление, золотая середина и душевное спокойствие." },
+            { number: "15", title: "XV. Дьявол", icon: "🔥", desc: "Привязанности, искушения, иллюзии или ограничения. Осознайте свои скрытые блоки." },
+            { number: "16", title: "XVI. Башня", icon: "⚡", desc: "Внезапные перемены, крушение иллюзий, очищение и прорыв к новой реальности." },
+            { number: "17", title: "XVII. Звезда", icon: "⭐", desc: "Надежда, вдохновение, верная звезда в темноте и обретение веры в будущее." },
+            { number: "18", title: "XVIII. Луна", icon: "🌕", desc: "Скрытые страхи, иллюзии, тайны и глубокая работа с подсознанием." },
+            { number: "19", title: "XIX. Солнце", icon: "☀️", desc: "Радость, успех, ясность, жизненная энергия и полный расцвет сил." },
+            { number: "20", title: "XX. Суд", icon: "🎺", desc: "Пробуждение, подведение итогов, важный жизненный вызов и возрождение." },
+            { number: "21", title: "XXI. Мир", icon: "🌍", desc: "Завершение цикла, гармония, целостность и достижение главной цели." }
         ];
-
-        const today = new Date();
-        const day = today.getDate();
-        const selectedCard = cards[day % cards.length];
-
-        document.getElementById("cardIcon").innerText = selectedCard.icon;
-        document.getElementById("cardTitle").innerText = selectedCard.title;
-        document.getElementById("cardDesc").innerText = selectedCard.desc;
-    </script>
-
-</body>
-</html>
