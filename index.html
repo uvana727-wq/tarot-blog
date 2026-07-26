@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мистический Блог Таро</title>
     <style>
-        :root {
-            --bg-color: #0d0b18;
-            --card-bg: #1a162b;
-            --accent-gold: #f39c12;
-            --text-color: #e0d9f6;
-            --text-muted: #a29bfe;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #080612;
+            color: #d1c9f0;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -24,7 +16,124 @@
             align-items: center;
         }
 
-        header {
+        h1 {
+            color: #f1c40f;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 5px;
         }
+
+        .subtitle {
+            color: #8e85b5;
+            text-align: center;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .card-box {
+            background: #130f26;
+            border: 1px solid #f1c40f;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #f1c40f;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(241, 196, 15, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .tarot-display {
+            text-align: center;
+            background: #1c1638;
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tarot-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .tarot-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        p, li {
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #6c63ff;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✨ Блог Таро ✨</h1>
+    <div class="subtitle">Мудрость арканов каждый день</div>
+
+    <div class="container">
+
+        <div class="tarot-display">
+            <div class="tarot-icon" id="cardIcon">🔮</div>
+            <div class="tarot-title" id="cardTitle">Карта Дня</div>
+        </div>
+
+        <div class="card-box">
+            <h2>🔮 Описание Карты Дня</h2>
+            <p id="cardDesc">Загрузка...</p>
+        </div>
+
+        <div class="card-box">
+            <h2>📜 История Карт Таро</h2>
+            <p>
+                Изначально Таро возникли в XV веке в Италии как игра для аристократов (Tarocchi). Лишь к XVIII веку французские оккультисты увидели в них глубокий символизм и стали использовать для предсказаний.
+            </p>
+            <ul>
+                <li><strong>XV век:</strong> Первые колоды ручной работы (Висконти-Сфорца).</li>
+                <li><strong>XVIII век:</strong> Развитие системы предсказаний (Эттейлла, Жебелен).</li>
+                <li><strong>XX век:</strong> Создание классической колоды Райдера-Уэйта (1909 год).</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 Блог Таро | Termux & GitHub Pages
+    </footer>
+
+    <script>
+        const cards = [
+            { title: "⭐ Звезда", icon: "⭐", desc: "Символ надежды, вдохновения и исцеления. Буря позади, впереди светлый путь." },
+            { title: "☀️ Солнце", icon: "☀️", desc: "Радость, успех и ясность. Отличный день для реализации идей и общения." },
+            { title: "🌙 Луна", icon: "🌙", desc: "Время интуиции и тайн. Не спешите с решениями и доверяйте внутреннему чутью." },
+            { title: "🎡 Колесо Фортуны", icon: "🎡", desc: "Поворот судьбы и новые возможности. Перемены уже на пороге!" },
+            { title: "🧙‍♂️ Маг", icon: "🧙‍♂️", desc: "Сила воли и мастерство. У вас есть все ресурсы для достижения цели." }
+        ];
+
+        const today = new Date();
+        const day = today.getDate();
+        const selectedCard = cards[day % cards.length];
+
+        document.getElementById("cardIcon").innerText = selectedCard.icon;
+        document.getElementById("cardTitle").innerText = selectedCard.title;
+        document.getElementById("cardDesc").innerText = selectedCard.desc;
+    </script>
+
+</body>
+</html>
