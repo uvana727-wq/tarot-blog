@@ -26,7 +26,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         h1 {
@@ -62,41 +62,95 @@
             margin-top: 0;
         }
 
-        p, li {
-            line-height: 1.6;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        /* Карточка дня */
-        .tarot-display {
+        /* Интерактивное гадание */
+        .divination-box {
             text-align: center;
-            background: linear-gradient(135deg, #1a1333, #090614);
+            background: linear-gradient(135deg, #18122d, #0b0718);
             border: 2px solid var(--accent-gold);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 25px;
             box-shadow: 0 0 20px rgba(241, 196, 15, 0.15);
-            animation: float 4s ease-in-out infinite;
         }
 
-        .tarot-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
+        .question-input {
+            width: 90%;
+            max-width: 400px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
+            background-color: #070510;
+            color: var(--text-color);
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            outline: none;
         }
 
-        .tarot-title {
-            font-size: 24px;
+        .btn-draw {
+            background: linear-gradient(45deg, #f1c40f, #d4ac0d);
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-draw:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tarot-card {
+            background: #191333;
+            border: 1px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .card-pos {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin: 8px 0;
+        }
+
+        .card-name {
             font-weight: bold;
             color: var(--accent-gold);
+            font-size: 15px;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
+        .card-meaning {
+            font-size: 12px;
+            margin-top: 8px;
+            color: var(--text-color);
+        }
+
+        p, li {
+            line-height: 1.6;
         }
 
         footer {
@@ -111,44 +165,59 @@
 
     <header>
         <h1>✨ Мистический Блог Таро ✨</h1>
-        <div class="subtitle">Мудрость арканов каждый день</div>
+        <div class="subtitle">Онлайн-онлайн расклады и тайны арканов</div>
     </header>
 
     <div class="container">
 
-        <div class="tarot-display">
-            <div class="tarot-icon" id="cardIcon">🔮</div>
-            <div class="tarot-title" id="cardTitle">Карта Дня</div>
-        </div>
+        <div class="divination-box">
+            <h2>🔮 Задай вопрос Судьбе</h2>
+            <p>Задумай свой вопрос и вытяни 4 карты из полной колоды (78 карт):</p>
+            <input type="text" id="userQuestion" class="question-input" placeholder="Например: Что меня ждет в ближайшем будущем?">
+            <br>
+            <button class="btn-draw" onclick="drawCards()">✨ Вытянуть 4 карты ✨</button>
 
-        <div class="card-section">
-            <h2 id="cardHeader">🔮 Толкование Карты Дня</h2>
-            <p id="cardDesc">Загрузка предсказания...</p>
+            <div id="resultQuestion" style="margin-top: 15px; font-style: italic; color: var(--accent-gold);"></div>
+
+            <div class="cards-grid" id="cardsContainer">
+                <div class="tarot-card">
+                    <div class="card-pos">1. Суть вопроса</div>
+                    <div class="card-icon">🎴</div>
+                    <div class="card-name">?</div>
+                </div>
+                <div class="tarot-card">
+                    <div class="card-pos">2. Препятствия</div>
+                    <div class="card-icon">🎴</div>
+                    <div class="card-name">?</div>
+                </div>
+                <div class="tarot-card">
+                    <div class="card-pos">3. Совет карт</div>
+                    <div class="card-icon">🎴</div>
+                    <div class="card-name">?</div>
+                </div>
+                <div class="tarot-card">
+                    <div class="card-pos">4. Итог / Судьба</div>
+                    <div class="card-icon">🎴</div>
+                    <div class="card-name">?</div>
+                </div>
+            </div>
         </div>
 
         <div class="card-section">
             <h2>🃏 Мои Любимые Расклады</h2>
             <ul>
-                <li><strong>«Три карты» (Прошлое / Настоящее / Будущее):</strong> Простой и эффективный расклад для быстрого анализа любой жизненной ситуации.</li>
-                <li><strong>«Крест»:</strong> Помогает разобраться в сложных проблемах, показывает препятствия и вероятный исход события.</li>
-                <li><strong>«Выбор»:</strong> Идеально подходит, когда вы стоите на распутье двух жизненных решений.</li>
-                <li><strong>«Совет карт»:</strong> Экспресс-расклад из одной карты для получения мудрого ориентира на день.</li>
+                <li><strong>«Три карты» (Прошлое / Настоящее / Будущее):</strong> Простой анализатор ситуации.</li>
+                <li><strong>«Крест»:</strong> Показывает препятствия и вероятный исход.</li>
+                <li><strong>«Выбор»:</strong> Помогает определиться между двумя вариантами.</li>
+                <li><strong>«Совет карт»:</strong> Быстрый ориентир на день.</li>
             </ul>
         </div>
 
         <div class="card-section">
             <h2>📜 История Карт Таро</h2>
             <p>
-                История карт Таро окутана множеством легенд и тайн. Вопреки распространенному мнению, изначально Таро возникли не как инструмент магии или гадания, а как карточная игра для аристократии.
+                Изначально Таро возникли в XV веке в Северной Италии как карточная игра для аристократов (Tarocchi). Лишь в XVIII веке оккультисты открыли их предсказательную силу.
             </p>
-            <p>
-                <strong>Основные вехи истории:</strong>
-            </p>
-            <ul>
-                <li><strong>XV век (Италия):</strong> Первые известные колоды (например, Таро Висконти-Сфорца) появились в Северной Италии для игры в <em>Tarocchi</em>.</li>
-                <li><strong>XVIII век (Франция):</strong> Исследователи и оккультисты разглядели в картах древний символизм и адаптировали их для предсказаний.</li>
-                <li><strong>XX век (Модерн):</strong> В 1909 году Артур Уэйт и художница Памела Колман Смит создали знаменитую классическую колоду <strong>Райдера-Уэйта</strong>.</li>
-            </ul>
         </div>
 
     </div>
@@ -158,28 +227,133 @@
     </footer>
 
     <script>
-        // Полный список всех 22 Старших Арканов Таро (от 0 до 21)
-        const majorArcana = [
-            { number: "0", title: "0. Дурак (Шут)", icon: "🃏", desc: "Символ новых начинаний, чистого листа, доверия вселенной и смелого шага в неизвестность." },
-            { number: "1", title: "I. Маг", icon: "🧙‍♂️", desc: "Сила воли, мастерство, изобретательность. У вас есть все ресурсы, чтобы реализовать свои идеи." },
-            { number: "2", title: "II. Жрица", icon: "🌙", desc: "Интуиция, тайные знания, внутренний голос. Время слушать ощущения и не торопить события." },
-            { number: "3", title: "III. Императрица", icon: "👑", desc: "Изобилие, творчество, гармония и природа. Период расцвета, заботы и новых проектов." },
-            { number: "4", title: "IV. Император", icon: "🏛️", desc: "Структура, порядок, стабильность и лидерство. Время брать контроль в свои руки." },
-            { number: "5", title: "V. Иерофант", icon: "📜", desc: "Мудрость, традиции, обучение и моральные ценности. Время обращения к знаниям." },
-            { number: "6", title: "VI. Влюбленные", icon: "Союз, выбор, гармония отношений и искренность чувств." },
-            { number: "7", title: "VII. Колесница", icon: "🏎️", desc: "Целеустремленность, победа над препятствиями и движение вперед на полной скорости." },
-            { number: "8", title: "VIII. Сила", icon: "🦁", desc: "Внутренняя стойкость, мягкое терпение, самообладание и сдерживание страстей." },
-            { number: "9", title: "IX. Отшельник", icon: "🕯️", desc: "Самоанализ, мудрость, переосмысление и поиск истины в тишине и уединении." },
-            { number: "10", title: "X. Колесо Фортуны", icon: "🎡", desc: "Цикличность жизни, повороты судьбы, удача и неизбежные перемены к лучшему." },
-            { number: "11", title: "XI. Справедливость", icon: "⚖️", desc: "Честность, объективность, закон причин и следствий. Справедливый исход." },
-            { number: "12", title: "XII. Повешенный", icon: "🙃", desc: "Новый взгляд на вещей, пауза, добровольная жертва ради переосмысления." },
-            { number: "13", title: "XIII. Смерть", icon: "🦋", desc: "Завершение старого этапа и трансформационные перемены. Освобождение места для нового." },
-            { number: "14", title: "XIV. Умеренность", icon: "🕊️", desc: "Баланс, гармония, исцеление, золотая середина и душевное спокойствие." },
-            { number: "15", title: "XV. Дьявол", icon: "🔥", desc: "Привязанности, искушения, иллюзии или ограничения. Осознайте свои скрытые блоки." },
-            { number: "16", title: "XVI. Башня", icon: "⚡", desc: "Внезапные перемены, крушение иллюзий, очищение и прорыв к новой реальности." },
-            { number: "17", title: "XVII. Звезда", icon: "⭐", desc: "Надежда, вдохновение, верная звезда в темноте и обретение веры в будущее." },
-            { number: "18", title: "XVIII. Луна", icon: "🌕", desc: "Скрытые страхи, иллюзии, тайны и глубокая работа с подсознанием." },
-            { number: "19", title: "XIX. Солнце", icon: "☀️", desc: "Радость, успех, ясность, жизненная энергия и полный расцвет сил." },
-            { number: "20", title: "XX. Суд", icon: "🎺", desc: "Пробуждение, подведение итогов, важный жизненный вызов и возрождение." },
-            { number: "21", title: "XXI. Мир", icon: "🌍", desc: "Завершение цикла, гармония, целостность и достижение главной цели." }
+        // База из 78 карт Таро
+        const fullDeck = [
+            // Старшие Арканы (22)
+            { name: "0. Дурак", icon: "🃏", desc: "Новые начинания, спонтанность, риск." },
+            { name: "I. Маг", icon: "🧙‍♂️", desc: "Мастерство, ресурсы, сила воли." },
+            { name: "II. Жрица", icon: "🌙", desc: "Интуиция, скрытые тайны, мудрость." },
+            { name: "III. Императрица", icon: "👑", desc: "Изобилие, процветание, творчество." },
+            { name: "IV. Император", icon: "🏛️", desc: "Порядок, власть, стабильность." },
+            { name: "V. Иерофант", icon: "📜", desc: "Традиции, обучение, духовнось." },
+            { name: "VI. Влюбленные", icon: "❤️", desc: "Выбор, союз, гармония." },
+            { name: "VII. Колесница", icon: "🏎️", desc: "Победа, прорыв, контрол." },
+            { name: "VIII. Сила", icon: "🦁", desc: "Терпение, стойкость, мягкая сила." },
+            { name: "IX. Отшельник", icon: "🕯️", desc: "Поиск истины, самоанализ." },
+            { name: "X. Колесо Фортуны", icon: "🎡", desc: "Удача, перемены, судьба." },
+            { name: "XI. Справедливость", icon: "⚖️", desc: "Честность, баланс, карма." },
+            { name: "XII. Повешенный", icon: "🙃", desc: "Новый взгляд, переоценка." },
+            { name: "XIII. Смерть", icon: "🦋", desc: "Завершение этапа, трансформация." },
+            { name: "XIV. Умеренность", icon: "🕊️", desc: "Баланс, гармония, исцеление." },
+            { name: "XV. Дьявол", icon: "🔥", desc: "Искушения, зависимости, блоки." },
+            { name: "XVI. Башня", icon: "⚡", desc: "Внезапные перемены, крушение иллюзий." },
+            { name: "XVII. Звезда", icon: "⭐", desc: "Надежда, вдохновение, вера." },
+            { name: "XVIII. Луна", icon: "🌕", desc: "Иллюзии, страхи, интуиция." },
+            { name: "XIX. Солнце", icon: "☀️", desc: "Радость, успех, энергия." },
+            { name: "XX. Суд", icon: "🎺", desc: "Пробуждение, перемены к лучшему." },
+            { name: "XXI. Мир", icon: "🌍", desc: "Завершение, гармония, успех." },
+
+            // Жезлы (14)
+            { name: "Туз Жезлов", icon: "🔥", desc: "Вспышка вдохновения, новая идея." },
+            { name: "Двойка Жезлов", icon: "🗺️", desc: "Планирование, выбор пути." },
+            { name: "Тройка Жезлов", icon: "Первые успехи, расширение горизонтов." },
+            { name: "Четверка Жезлов", icon: "Праздник, домашний уют, стабильность." },
+            { name: "Пятерка Жезлов", icon: "⚔️", desc: "Соперничество, споры, конкуренция." },
+            { name: "Шестерка Жезлов", icon: "🏆", desc: "Триумф, признание, победа." },
+            { name: "Семерка Жезлов", icon: "Защита своих позиций." },
+            { name: "Восьмерка Жезлов", icon: "🚀", desc: "Быстрые события, новости." },
+            { name: "Девятка Жезлов", icon: "🛡️", desc: "Осторожность, готовность к защите." },
+            { name: "Десятка Жезлов", icon: "🏋️", desc: "Тяжелая ноша, усталость." },
+            { name: "Паж Жезлов", icon: "📜", desc: "Хорошие известия, интерес." },
+            { name: "Рыцарь Жезлов", icon: "🐎", desc: "Энергия, страсть, импульсивность." },
+            { name: "Королева Жезлов", icon: "💃", desc: "Уверенность, харизма." },
+            { name: "Король Жезлов", icon: "🕺", desc: "Лидерство, амбиции." },
+
+            // Кубки (14)
+            { name: "Туз Кубков", icon: "💖", desc: "Любовь, искренние эмоции." },
+            { name: "Двойка Кубков", icon: "🤝", desc: "Партнерство, взаимность." },
+            { name: "Тройка Кубков", icon: "🎉", desc: "Радость, встреча с друзьями." },
+            { name: "Четверка Кубков", icon: "😒", desc: "Апатия, упущенные шансы." },
+            { name: "Пятерка Кубков", icon: "😢", desc: "Печаль о прошлом, разочарование." },
+            { name: "Шестерка Кубков", icon: "🌸", desc: "Ностальгия, приятные воспоминания." },
+            { name: "Семерка Кубков", icon: "🌈", desc: "Иллюзии, мечты, выбор." },
+            { name: "Восьмерка Кубков", icon: "🚶", desc: "Уход от прошлого, поиск себя." },
+            { name: "Девятка Кубков", icon: "🍷", desc: "Исполнение желаний, комфорт." },
+            { name: "Десятка Кубков", icon: "🏡", desc: "Семейное счастье, гармония." },
+            { name: "Паж Кубков", icon: "💌", desc: "Приятное послание, комплимент." },
+            { name: "Рыцарь Кубков", icon: "🌹", desc: "Романтика, предложение." },
+            { name: "Королева Кубков", icon: "👑", desc: "Забота, сочувствие, интуиция." },
+            { name: "Король Кубков", icon: "👑", desc: "Эмоциональная зрелость, мудрость." },
+
+            // Мечи (14)
+            { name: "Туз Мечей", icon: "🗡️", desc: "Ясность ума, решительное решение." },
+            { name: "Двойка Мечей", icon: "🙈", desc: "Сомнения, тупик, нерешительность." },
+            { name: "Тройка Мечей", icon: "💔", desc: "Разбитое сердце, переживания." },
+            { name: "Четверка Мечей", icon: "🛌", desc: "Отдых, пауза, восстановление сил." },
+            { name: "Пятерка Мечей", icon: "🥀", desc: "Конфликт, неприятный опыт." },
+            { name: "Шестерка Мечей", icon: "⛵", desc: "Движение к спокойным берегам." },
+            { name: "Семерка Мечей", icon: "🦊", desc: "Хитрость, обходные пути." },
+            { name: "Восьмерка Мечей", icon: "🕸️", desc: "Ограничения, страхи в голове." },
+            { name: "Девятка Мечей", icon: "😱", desc: "Тревога, бессонница, переживания." },
+            { name: "Десятка Мечей", icon: "🌅", desc: "Завершение тяжелого периода." },
+            { name: "Паж Мечей", icon: "🔍", desc: "Сбор информации, любопытство." },
+            { name: "Рыцарь Мечей", icon: "🌪️", desc: "Резкие действия, споры." },
+            { name: "Королева Мечей", icon: "Блестящий ум, независимость." },
+            { name: "Король Мечей", icon: "⚖️", desc: "Логика, авторитет, строгость." },
+
+            // Пентакли (14)
+            { name: "Туз Пентаклей", icon: "🪙", desc: "Финансовый шанс, ценный подарок." },
+            { name: "Двойка Пентаклей", icon: "🤹", desc: "Балансирование, ловкость." },
+            { name: "Тройка Пентаклей", icon: "🛠️", desc: "Мастерство, командная работа." },
+            { name: "Четверка Пентаклей", icon: "🏰", desc: "Сохранение ресурсов, жадность." },
+            { name: "Пятерка Пентаклей", icon: "🌧️", desc: "Временные трудности, нехватка." },
+            { name: "Шестерка Пентаклей", icon: "🎁", desc: "Щедрость, помощь, поддержка." },
+            { name: "Семерка Пентаклей", icon: "🌱", desc: "Терпеливое ожидание результатов." },
+            { name: "Восьмерка Пентаклей", icon: "🔨", desc: "Трудолюбие, учеба, работа." },
+            { name: "Девятка Пентаклей", icon: "🦚", desc: "Успех, достаток, удовольствие." },
+            { name: "Десятка Пентаклей", icon: "🏛️", desc: "Стабильность, процветание рода." },
+            { name: "Паж Пентаклей", icon: "📚", desc: "Учеба, хорошая возможность." },
+            { name: "Рыцарь Пентаклей", icon: "🚜", desc: "Надежность, постоянство." },
+            { name: "Королева Пентаклей", icon: "🪴", desc: "Забота, практичность, уют." },
+            { name: "Король Пентаклей", icon: "👑", desc: "Богатство, стабильный бизнес." }
         ];
+
+        const positions = [
+            "1. Суть вопроса",
+            "2. Препятствия",
+            "3. Совет карт",
+            "4. Итог / Судьба"
+        ];
+
+        function drawCards() {
+            const questionInput = document.getElementById("userQuestion").value.trim();
+            const resultQuestion = document.getElementById("resultQuestion");
+            
+            if(questionInput !== "") {
+                resultQuestion.innerText = `Ваш вопрос: «${questionInput}»`;
+            } else {
+                resultQuestion.innerText = "Расклад на ближайшую судьбу:";
+            }
+
+            // Перемешиваем колоду
+            let shuffled = [...fullDeck].sort(() => 0.5 - Math.random());
+            let selected = shuffled.slice(0, 4);
+
+            const container = document.getElementById("cardsContainer");
+            container.innerHTML = "";
+
+            selected.forEach((card, index) => {
+                container.innerHTML += `
+                    <div class="tarot-card">
+                        <div class="card-pos">${positions[index]}</div>
+                        <div class="card-icon">${card.icon}</div>
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-meaning">${card.desc}</div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+
+</body>
+</html>
