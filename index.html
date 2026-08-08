@@ -55,7 +55,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        h2 {
+        h2, h3 {
             color: var(--accent-gold);
             border-bottom: 1px solid rgba(243, 156, 18, 0.3);
             padding-bottom: 8px;
@@ -64,6 +64,24 @@
 
         p {
             line-height: 1.6;
+        }
+
+        /* Поле ввода вопроса */
+        .question-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
+            background-color: #0d0b18;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .question-input:focus {
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
         }
 
         /* Блок Карта Дня */
@@ -88,13 +106,6 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        .tarot-card img {
-            max-width: 80%;
-            max-height: 70%;
-            border-radius: 5px;
-            object-fit: cover;
-        }
-
         .card-title {
             margin-top: 10px;
             font-weight: bold;
@@ -102,13 +113,13 @@
             text-align: center;
         }
 
-        /* Сетка для 4 карт */
+        /* Сетка карт */
         .spread-grid {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .interactive-card {
@@ -139,12 +150,32 @@
         }
 
         .answer-box {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 25px;
+            padding: 20px;
             background: rgba(243, 156, 18, 0.05);
-            border-left: 3px solid var(--accent-gold);
-            border-radius: 4px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 8px;
             display: none;
+        }
+
+        .user-q-display {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(243, 156, 18, 0.2);
+        }
+
+        .sphere-block {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .sphere-title {
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 3px;
         }
 
         @keyframes float {
@@ -183,8 +214,10 @@
 
         <div class="card-section">
             <h2>❓ Задай свой вопрос Таро</h2>
-            <p>Загадай волнующий вопрос, сосредоточься на нем и выбери одну из четырёх карт ниже:</p>
+            <p>Напиши ниже всё, что тебя волнует, а затем нажми на одну из четырёх карт:</p>
             
+            <input type="text" id="userQuestion" class="question-input" placeholder="Например: Что меня ждёт на этой неделе? или Стоит ли менять работу?">
+
             <div class="spread-grid">
                 <div class="interactive-card" onclick="askQuestion(1)">
                     <div class="card-icon" id="icon1">🎴</div>
@@ -205,27 +238,16 @@
             </div>
 
             <div class="answer-box" id="answerBox">
-                <h3 id="answerTitle" style="color: var(--accent-gold); margin-top: 0;">Ответ Таро:</h3>
-                <p id="answerText"></p>
+                <div class="user-q-display" id="userQDisplay"></div>
+                <h3 id="answerTitle">Полная Трактовка Карты</h3>
+                <div id="answerContent"></div>
             </div>
         </div>
 
         <div class="card-section">
-            <h2>📜 Полная История Карт Таро</h2>
+            <h2>📜 История Карт Таро</h2>
             <p>
-                История карт Таро — это увлекательное путешествие сквозь века, полное трансформирующихся смыслов, мифов и философских концепций. За несколько столетий Таро прошли путь от светского развлечения знати до сложно устроенной системы предсказаний и психологического анализа.
-            </p>
-            <p>
-                <strong>1. Зарождение в эпохе Возрождения (XV век)</strong><br>
-                Первые задокументированные колоды появились в Италии в 1430-х годах (Висконти-Сфорца) и использовались для игры в <em>Tarocchi</em>.
-            </p>
-            <p>
-                <strong>2. Оккультный поворот (XVIII век)</strong><br>
-                Французские исследователи разглядели в картах древний символизм, и Эттейлла создал первую колоду для предсказаний.
-            </p>
-            <p>
-                <strong>3. Орден Золотой Зари (XX век)</strong><br>
-                В 1909 году Артур Уэйт и Памела Колман Смит создали знаменитую колоду **Райдера-Уэйта** с прорисованными сюжетными Младшими Арканами.
+                История карт Таро за несколько столетий прошла путь от аристократической игры в Италии XV века до важнейшего инструмента самопознания и эзотерики.
             </p>
         </div>
 
@@ -256,26 +278,59 @@
             { name: "XV. Дьявол", icon: "🔗", desc: "Будьте внимательны к соблазнам и зависимостям." },
             { name: "XVI. Башня", icon: "⚡", desc: "Внезапные прозрения и разрушение старых иллюзий." },
             { name: "XVII. Звезда", icon: "⭐", desc: "Свет надежды, исцеление и верность своим мечтам." },
-            { name: "XVIII. Луна", icon: "Создание", desc: "Иллюзии и скрытые мотивы. Доверяйте интуиции, но проверяйте факты." },
+            { name: "XVIII. Луна", icon: "🌊", desc: "Иллюзии и скрытые мотивы. Доверяйте интуиции, но проверяйте факты." },
             { name: "XIX. Солнце", icon: "☀️", desc: "Ясность, радость, триумф и энергия!" },
             { name: "XX. Суд", icon: "🎺", desc: "Пробуждение, подведение итогов и новое призвание." },
             { name: "XXI. Мир", icon: "🌍", desc: "Завершение цикла, гармония и полное достижение цели." }
         ];
 
-        // 78 Карточная колода (для гадания)
+        // Колода с подробными ответами по сферам
         const fullDeck = [
-            ...majorArcana,
-            { name: "Туз Жезлов", icon: "🔥", desc: "Мощный импульс, вдохновение и новая идея для вашего вопроса." },
-            { name: "Туз Кубков", icon: "🏆", desc: "Искренние эмоции, любовь и наполненность в ответе на ваш вопрос." },
-            { name: "Туз Мечей", icon: "🗡️", desc: "Ясность ума, честное решение и прорыв через сложности." },
-            { name: "Туз Пентаклей", icon: "🪙", desc: "Материальный успех, шанс на выгоду и надежная опора." },
-            { name: "Десятка Кубков", icon: "🌈", desc: "Полная семейная гармония и счастье в загаданной сфере." },
-            { name: "Тройка Жезлов", icon: "⛵", desc: "Перспективы открыты, время расширять горизонты." },
-            { name: "Пятерка Пентаклей", icon: "❄️", desc: "Временные трудности, требующие экономии сил." },
-            { name: "Восьмерка Жезлов", icon: "🚀", desc: "События будут развиваться очень стремительно!" }
+            {
+                name: "Шут (Дурак)", icon: "🎒",
+                general: "Начало нового жизненного этапа, чистый лист, отсутствие страха перед неизвестным.",
+                love: "Спонтанные чувства, лёгкий флирт, открытость без предрассудков.",
+                work: "Новый проект, где понадобится креативность и готовность рисковать.",
+                future: "Вас ждёт неожиданное поворотное событие. Доверьтесь естественному ходу вещей."
+            },
+            {
+                name: "Маг", icon: "🪄",
+                general: "Полный контроль над обстоятельствами, мастерство и реализация идей.",
+                love: "Инициатива в руках одного из партнеров, яркое притяжение и лидерство.",
+                work: "Успешные переговоры, профессиональный взлёт, запуск собственного дела.",
+                future: "Отличное время для активных действий. Все ресурсы у вас уже есть."
+            },
+            {
+                name: "Звезда", icon: "⭐",
+                general: "Вдохновение, гармония, исцеление духовных и физических сил.",
+                love: "Глубокая романтическая связь, верность, совместные мечты о будущем.",
+                work: "Долгосрочные перспективные проекты, признание талантов.",
+                future: "Период спокойствия и уверенности. Ваши цели обязательно воплотятся."
+            },
+            {
+                name: "Солнце", icon: "☀️",
+                general: "Радость, процветание, успехи во всех начинаниях.",
+                love: "Теплые, открытые и доверительные отношения, счастливый союз.",
+                work: "Публичное признание, финансовый рост, успешно завершенные дела.",
+                future: "Впереди светлая полоса, полная жизненной энергии и удачи."
+            },
+            {
+                name: "Туз Пентаклей", icon: "🪙",
+                general: "Отличный материальный шанс, подарок судьбы, прочная основа.",
+                love: "Стабильные и практичные отношения, забота и чувство безопасности.",
+                work: "Премия, выгодное предложение, повышение дохода или успешная покупка.",
+                future: "Благоприятные финансовые перспективы и укрепление жизненных позиций."
+            },
+            {
+                name: "Туз Кубков", icon: "🏆",
+                general: "Эмоциональный подъем, праздник души, вдохновение.",
+                love: "Вспышка новых чувств, признание в любви, глубокое счастье.",
+                work: "Любимое дело, приносит удовольствие и творческое удовлетворение.",
+                future: "Вас ожидает гармония в душе и радостные эмоциональные события."
+            }
         ];
 
-        // Алгоритм Карты Дня (обновляется раз в сутки)
+        // Карта Дня
         function initDailyCard() {
             const today = new Date();
             const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -287,21 +342,51 @@
             document.getElementById('dailyDescription').innerText = card.desc;
         }
 
-        // Логика выбора из 4 карт
+        // Клик по карте
         function askQuestion(cardNumber) {
+            const userQ = document.getElementById('userQuestion').value.trim();
             const randomIndex = Math.floor(Math.random() * fullDeck.length);
-            const drawnCard = fullDeck[randomIndex];
+            const card = fullDeck[randomIndex];
 
-            document.getElementById(`icon${cardNumber}`).innerText = drawnCard.icon;
-            document.getElementById(`title${cardNumber}`).innerText = drawnCard.name;
+            document.getElementById(`icon${cardNumber}`).innerText = card.icon;
+            document.getElementById(`title${cardNumber}`).innerText = card.name;
 
             const answerBox = document.getElementById('answerBox');
+            const userQDisplay = document.getElementById('userQDisplay');
+            const answerContent = document.getElementById('answerContent');
+
+            // Показываем текст вопроса
+            if (userQ !== "") {
+                userQDisplay.innerText = `Ваш вопрос: «${userQ}»`;
+                userQDisplay.style.display = 'block';
+            } else {
+                userQDisplay.style.display = 'none';
+            }
+
+            // Выводим структурированный ответ
+            answerContent.innerHTML = `
+                <div class="sphere-block">
+                    <div class="sphere-title">✨ Общее значение:</div>
+                    <div>${card.general}</div>
+                </div>
+                <div class="sphere-block">
+                    <div class="sphere-title">❤️ В любви и отношениях:</div>
+                    <div>${card.love}</div>
+                </div>
+                <div class="sphere-block">
+                    <div class="sphere-title">💼 В карьере и финансах:</div>
+                    <div>${card.work}</div>
+                </div>
+                <div class="sphere-block">
+                    <div class="sphere-title">🔮 На будущее и совет:</div>
+                    <div>${card.future}</div>
+                </div>
+            `;
+
+            document.getElementById('answerTitle').innerText = `Выпала карта №${cardNumber}: ${card.name}`;
             answerBox.style.display = 'block';
-            document.getElementById('answerTitle').innerText = `Карта №${cardNumber}: ${drawnCard.name}`;
-            document.getElementById('answerText').innerText = drawnCard.desc;
         }
 
-        // Запуск при загрузке
         window.onload = initDailyCard;
     </script>
 </body>
