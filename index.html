@@ -6,11 +6,11 @@
     <title>Мистический Блог Таро</title>
     <style>
         :root {
-            --bg-color: #06040a;
-            --card-bg: #110d21;
-            --accent-gold: #f1c40f;
-            --text-color: #dcd6f7;
-            --text-muted: #8d85b5;
+            --bg-color: #0d0b18;
+            --card-bg: #1a162b;
+            --accent-gold: #f39c12;
+            --text-color: #e0d9f6;
+            --text-muted: #a29bfe;
         }
 
         body {
@@ -26,14 +26,14 @@
 
         header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         h1 {
             color: var(--accent-gold);
             font-size: 2.2rem;
             margin-bottom: 5px;
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
         }
 
         .subtitle {
@@ -48,148 +48,72 @@
 
         .card-section {
             background: var(--card-bg);
-            border: 1px solid rgba(241, 196, 15, 0.2);
+            border: 1px solid rgba(243, 156, 18, 0.2);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         h2 {
             color: var(--accent-gold);
-            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+            border-bottom: 1px solid rgba(243, 156, 18, 0.3);
             padding-bottom: 8px;
             margin-top: 0;
         }
 
-        /* Блок гадания */
-        .divination-box {
-            text-align: center;
-            background: linear-gradient(135deg, #18122d, #0b0718);
+        p {
+            line-height: 1.6;
+        }
+
+        ul {
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Анимация карты */
+        .tarot-card-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .tarot-card {
+            width: 160px;
+            height: 270px;
+            background: linear-gradient(135deg, #2c2243, #150d2a);
             border: 2px solid var(--accent-gold);
-            border-radius: 12px;
-            padding: 25px 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 20px rgba(241, 196, 15, 0.15);
-        }
-
-        .mode-select {
-            margin-bottom: 15px;
-        }
-
-        .mode-btn {
-            background: #0f0b1e;
-            border: 1px solid var(--accent-gold);
-            color: var(--text-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin: 0 5px;
-            transition: all 0.3s;
-        }
-
-        .mode-btn.active {
-            background: var(--accent-gold);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .question-input {
-            width: 90%;
-            max-width: 400px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--accent-gold);
-            background-color: #070510;
-            color: var(--text-color);
-            font-size: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            outline: none;
-        }
-
-        /* Рубашки карт */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .tarot-card-wrapper {
-            perspective: 1000px;
-            height: 200px;
-            cursor: pointer;
-        }
-
-        .tarot-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .tarot-card-wrapper.flipped .tarot-card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
             border-radius: 10px;
-            border: 2px solid var(--accent-gold);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            box-sizing: border-box;
-            padding: 10px;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+            animation: float 4s ease-in-out infinite;
         }
 
-        /* Рубашка */
-        .card-back {
-            background: linear-gradient(135deg, #1c133a, #080415);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        .tarot-card img {
+            max-width: 80%;
+            max-height: 70%;
+            border-radius: 5px;
+            object-fit: cover;
         }
 
-        .card-back-pattern {
-            font-size: 30px;
+        .card-title {
+            margin-top: 10px;
+            font-weight: bold;
             color: var(--accent-gold);
         }
 
-        .card-back-text {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 5px;
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
-
-        /* Лицевая сторона */
-        .card-front {
-            background: #191333;
-            transform: rotateY(180deg);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
-        }
-
-        .card-icon { font-size: 35px; margin-bottom: 5px; }
-        .card-title { font-weight: bold; color: var(--accent-gold); font-size: 14px; }
-
-        /* Описание под картами */
-        .reading-result {
-            margin-top: 25px;
-            padding: 15px;
-            background: #0d081e;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-gold);
-            text-align: left;
-            display: none;
-        }
-
-        p, li { line-height: 1.6; }
 
         footer {
             margin-top: 30px;
@@ -202,85 +126,50 @@
 <body>
 
     <header>
-        <h1>✨ Мистический Блог Таро ✨</h1>
-        <div class="subtitle">Узнай свою судьбу через тайные знания арканов</div>
+        <h1>✨ Блог Таро ✨</h1>
+        <div class="subtitle">Погружение в таинственный мир символов и предсказаний</div>
     </header>
 
     <div class="container">
-
-        <div class="divination-box">
-            <h2>🔮 Интерактивное Гадание</h2>
-            <p style="font-size: 14px;">Выбери период, напиши волнующий вопрос и кликни по любой из 4 карт:</p>
-
-            <div class="mode-select">
-                <button class="mode-btn active" onclick="setPeriod('день', this)">На День ☀️</button>
-                <button class="mode-btn" onclick="setPeriod('месяц', this)">На Месяц 🌙</button>
-            </div>
-
-            <input type="text" id="userQuestion" class="question-input" placeholder="Задай свой вопрос судьбе...">
-
-            <div class="cards-grid">
-                <div class="tarot-card-wrapper" onclick="revealCard(0, this)">
-                    <div class="tarot-card-inner">
-                        <div class="card-back">
-                            <div class="card-back-pattern">✨ 🎴 ✨</div>
-                            <div class="card-back-text">Выбрать карту 1</div>
-                        </div>
-                        <div class="card-front" id="cardFront0"></div>
-                    </div>
-                </div>
-
-                <div class="tarot-card-wrapper" onclick="revealCard(1, this)">
-                    <div class="tarot-card-inner">
-                        <div class="card-back">
-                            <div class="card-back-pattern">✨ 🎴 ✨</div>
-                            <div class="card-back-text">Выбрать карту 2</div>
-                        </div>
-                        <div class="card-front" id="cardFront1"></div>
-                    </div>
-                </div>
-
-                <div class="tarot-card-wrapper" onclick="revealCard(2, this)">
-                    <div class="tarot-card-inner">
-                        <div class="card-back">
-                            <div class="card-back-pattern">✨ 🎴 ✨</div>
-                            <div class="card-back-text">Выбрать карту 3</div>
-                        </div>
-                        <div class="card-front" id="cardFront2"></div>
-                    </div>
-                </div>
-
-                <div class="tarot-card-wrapper" onclick="revealCard(3, this)">
-                    <div class="tarot-card-inner">
-                        <div class="card-back">
-                            <div class="card-back-pattern">✨ 🎴 ✨</div>
-                            <div class="card-back-text">Выбрать карту 4</div>
-                        </div>
-                        <div class="card-front" id="cardFront3"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="readingResult" class="reading-result">
-                <h3 id="resTitle" style="color: var(--accent-gold); margin-top: 0;"></h3>
-                <p id="resDesc"></p>
-                <p id="resAdvice" style="font-style: italic; color: var(--text-muted);"></p>
+        
+        <div class="tarot-card-container">
+            <div class="tarot-card">
+                <img src="star.jpg" alt="Карта Звезда" onerror="this.style.display='none'">
+                <div class="card-title">⭐ Звезда</div>
             </div>
         </div>
 
         <div class="card-section">
-            <h2>🃏 Мои Любимые Расклады</h2>
-            <ul>
-                <li><strong>«Три карты»:</strong> Быстрый разбор: Прошлое, Настоящее, Будущее.</li>
-                <li><strong>«Крест»:</strong> Анализ препятствий и поиска решения.</li>
-                <li><strong>«Совет карт»:</strong> Ориентир на важный жизненный шаг.</li>
-            </ul>
-        </div>
-
-        <div class="card-section">
-            <h2>📜 История Карт Таро</h2>
+            <h2>📜 Полная История Карт Таро</h2>
             <p>
-                Возникнув в XV веке в Италии как забава аристократов (Tarocchi), Таро превратились в один из самых глубоких символических инструментов для самопознания и предсказания судьбы.
+                История карт Таро — это увлекательное путешествие сквозь века, полное трансформирующихся смыслов, мифов и философских концепций. За несколько столетий Таро прошли путь от светского развлечения знати до сложно устроенной системы предсказаний и психологического анализа.
+            </p>
+            
+            <p>
+                <strong>1. Зарождение в эпохе Возрождения (XV век)</strong><br>
+                Вопреки популярным легендам об их древнеегипетском или цыганском происхождении, первые задокументированные колоды появились в Италии в 1430-х годах. Знаменитые семьи, такие как Висконти и Сфорца, заказывали у художников роскошные иллюминированные колоды, расписанные сусальным золотом. В то время эти карты назывались <em>Carte da trionfi</em> («Карты триумфов») и использовались для элитарной игры *Tarocchi*, напоминающей современный бридж.
+            </p>
+
+            <p>
+                <strong>2. Оккультный поворот и Эра Просвещения (XVIII век)</strong><br>
+                Лишь к концу XVIII века во Франции карты приобрели сакральный и мистический подтекст. Французский исследователь Антуан Кур де Жебелен выдвинул гипотезу, что 22 Старших Аркана — это уцелевшие страницы «Книги Тота», содержащей тайные знания древнеегипетских жрецов. За ним последовал Эттейлла (Жан-Батист Альетт), который создал первую в истории специализированную колоду для гадания и сделал предсказания на Таро своей профессией.
+            </p>
+
+            <p>
+                <strong>3. Эзотерический расцвет и Орден Золотой Зари (XX век)</strong><br>
+                Настоящий прорыв в символизме Таро произошел в начале XX века благодаря британскому эзотерическому обществу «Орден Золотой Зари». В 1909 году оккультист Артур Эдвард Уэйт и художница Памела Колман Смит выпустили революционную колоду — **Таро Райдера-Уэйта**. Ее главная инновация заключалась в том, что сюжетные иллюстрации получили не только Старшие, но и Младшие Арканы, что сделало чтение символов доступным для каждого.
+            </p>
+
+            <p>
+                <strong>4. Современность и психология (XXI век)</strong><br>
+                В наши дни Таро вышли далеко за рамки классического гадания. Знаменитый психоаналитик Карл Густав Юнг рассматривал символы Арканов как архетипы коллективного бессознательного. Сегодня карты используются как инструмент для саморефлексии, медитации, поиска творческого вдохновения и глубокой работы с подсознанием.
+            </p>
+        </div>
+
+        <div class="card-section">
+            <h2>🔮 Карта Дня: Звезда</h2>
+            <p>
+                Карта <strong>«Звезда»</strong> символизирует надежду, вдохновение, гармонию и веру в лучшее будущее. Она напоминает о том, что после любой бури наступает период спокойствия и исцеления.
             </p>
         </div>
 
@@ -289,150 +178,6 @@
     <footer>
         <p>© 2026 Блог Таро | Создано с помощью Termux & GitHub</p>
     </footer>
-
-    <script>
-        // Полная база из ВСЕХ 78 карт Таро
-        const fullDeck = [
-            // --- СТАРШИЕ АРКАНЫ (22) ---
-            { name: "0. Дурак (Шут)", icon: "🃏", day: "День неожиданностей и новых шансов. Шагайте смело!", month: "Месяц чистейшей трансформации. Начнётся новая глава." },
-            { name: "I. Маг", icon: "🧙‍♂️", day: "Отличный день для реализации идей. Всё в ваших руках!", month: "Период активных побед. Ваша воля принесёт плоды." },
-            { name: "II. Жрица", icon: "🌙", day: "Доверьтесь интуиции и не торопите события.", month: "Месяц тайн и внутреннего роста. Прислушивайтесь к знакам." },
-            { name: "III. Императрица", icon: "👑", day: "День уюта, гармонии и приятных новостей.", month: "Период процветания, изобилия и расцвета." },
-            { name: "IV. Император", icon: "🏛️", day: "Проявите дисциплину и возьмите контроль в свои руки.", month: "Месяц укрепления авторитета и стабильности." },
-            { name: "V. Иерофант", icon: "📜", day: "День поиска мудрых советов и обучения.", month: "Месяц важных уроков и духовной опоры." },
-            { name: "VI. Влюбленные", icon: "❤️", day: "Приготовьтесь сделать искренний и важный выбор.", month: "Период гармонии в отношениях и судьбоносных решений." },
-            { name: "VII. Колесница", icon: "🏎️", day: "Двигайтесь только вперёд! Препятствия падут.", month: "Месяц стремительного прогресса и прорывов." },
-            { name: "VIII. Сила", icon: "🦁", day: "Проявите терпение и мягкую уверенность.", month: "Период преодоления любых испытаний с честью." },
-            { name: "IX. Отшельник", icon: "🕯️", day: "Время побыть в тишине и навести порядок в мыслях.", month: "Месяц переосмысления ценностей и анализа." },
-            { name: "X. Колесо Фортуны", icon: "🎡", day: "Удача на вашей стороне! Ждите поворот.", month: "Судьбоносный месяц! Фортуна повернется к вам." },
-            { name: "XI. Справедливость", icon: "⚖️", day: "Будьте честны и объективны во всём.", month: "Месяц решения спорных вопросов по справедливости." },
-            { name: "XII. Повешенный", icon: "🙃", day: "Посмотрите на ситуацию под другим углом.", month: "Период паузы и нужных уступок." },
-            { name: "XIII. Смерть", icon: "🦋", day: "Отпустите старое. Освободите место новому.", month: "Месяц обновления. Старое уйдет, уступая лучшему." },
-            { name: "XIV. Умеренность", icon: "🕊️", day: "День спокойствия, баланса и исцеления.", month: "Месяц обретения душевного мира и гармонии." },
-            { name: "XV. Дьявол", icon: "🔥", day: "Остерегайтесь искушений и спонтанных трат.", month: "Месяц проверки на прочность. Избавляйтесь от привязанностей." },
-            { name: "XVI. Башня", icon: "⚡", day: "Внезапные изменения разрушат иллюзии.", month: "Месяц резких перемен, очищающих путь." },
-            { name: "XVII. Звезда", icon: "⭐", day: "Ваши надежды обоснованы, верьте в мечту!", month: "Период вдохновения и верной заветной цели." },
-            { name: "XVIII. Луна", icon: "🌕", day: "Не верьте слухам, опирайтесь на факты.", month: "Месяц работы с подсознанием и секретами." },
-            { name: "XIX. Солнце", icon: "☀️", day: "День наполнен светом, радостью и успехом!", month: "Счастливейший месяц! Вас ждут признание и достаток." },
-            { name: "XX. Суд", icon: "🎺", day: "Время подвести итоги и сделать вывод.", month: "Месяц важного призвания и перемен." },
-            { name: "XXI. Мир", icon: "🌍", day: "Завершение дела принесёт удовлетворение.", month: "Месяц достижения целей и полной гармонии." },
-
-            // --- ЖЕЗЛЫ (14) ---
-            { name: "Туз Жезлов", icon: "🔥", day: "Мощная идея и вдохновение!", month: "Месяц яркого старта амбициозного проекта." },
-            { name: "2 Жезлов", icon: "🗺️", day: "Время планировать и выбирать вектор.", month: "Месяц выстраивания стратегии на будущее." },
-            { name: "3 Жезлов", icon: "🌟", day: "Первые успехи не заставят ждать.", month: "Месяц расширения горизонтов и перспектив." },
-            { name: "4 Жезлов", icon: "🏡", day: "Уютный день, радость и стабильность.", month: "Месяц праздника, гармонии в доме и успеха." },
-            { name: "5 Жезлов", icon: "⚔️", day: "Возможна небольшая конкуренция или спор.", month: "Месяц борьбы за свои интересы и роста." },
-            { name: "6 Жезлов", icon: "🏆", day: "День публичного признания и победы.", month: "Месяц триумфа и достижения важной вершины." },
-            { name: "7 Жезлов", icon: "🛡️", day: "Защищайте свои границы и мнение.", month: "Месяц уверенного отстаивания своих прав." },
-            { name: "8 Жезлов", icon: "🚀", day: "События развиваются с огромной скоростью!", month: "Месяц стремительных новостей и поездок." },
-            { name: "9 Жезлов", icon: "🏰", day: "Будьте осмотрительны и собранны.", month: "Месяц защиты результатов своего труда." },
-            { name: "10 Жезлов", icon: "🏋️", day: "Снизьте нагрузку, вы взяли слишком много.", month: "Месяц завершения тяжелого и длинного труда." },
-            { name: "Паж Жезлов", icon: "📜", day: "Приятные известия и новый интерес.", month: "Месяц увлекательных открытий и новостей." },
-            { name: "Рыцарь Жезлов", icon: "🐎", day: "Действуйте решительно и смело!", month: "Месяц приключений, активности и поездок." },
-            { name: "Королева Жезлов", icon: "💃", day: "Проявите харизму и уверенность.", month: "Месяц личного обаяния и сильных решений." },
-            { name: "Король Жезлов", icon: "🕺", day: "Возьмите лидерство на себя.", month: "Месяц высоких достижений и авторитета." },
-
-            // --- КУБКИ (14) ---
-            { name: "Туз Кубков", icon: "💖", day: "Искренние эмоции, любовь и вдохновение.", month: "Месяц счастья, любви и гармонии в душе." },
-            { name: "2 Кубков", icon: "🤝", day: "Взаимопонимание, теплое общение.", month: "Месяц укрепления союзов и искренней дружбы." },
-            { name: "3 Кубков", icon: "🎉", day: "Повод для праздника и встречи с близкими.", month: "Месяц радостных событий в кругу друзей." },
-            { name: "4 Кубков", icon: "😒", day: "Не упускайте возможности из-за скуки.", month: "Месяц поиска новых смыслов и вдохновения." },
-            { name: "5 Кубков", icon: "😢", day: "Перестаньте жалеть о прошлом.", month: "Месяц прощания с обидами и движения вперед." },
-            { name: "6 Кубков", icon: "🌸", day: "Теплые воспоминания и приветики из прошлого.", month: "Месяц искренней ностальгии и добрых встреч." },
-            { name: "7 Кубков", icon: "🌈", day: "Сфокусируйтесь на реальных целях.", month: "Месяц выбора среди множества перспектив." },
-            { name: "8 Кубков", icon: "🚶", day: "Время оставить устаревшее позади.", month: "Месяц поиска своего настоящего пути." },
-            { name: "9 Кубков", icon: "🍷", day: "День исполнения маленького желания!", month: "Месяц комфорта, удовольствий и достатка." },
-            { name: "10 Кубков", icon: "👨‍👩‍👧", day: "Полная гармония с окружением.", month: "Месяц семейного тепла и счастья." },
-            { name: "Паж Кубков", icon: "💌", day: "Милый знак внимания или предложение.", month: "Месяц вдохновения и творческих импульсов." },
-            { name: "Рыцарь Кубков", icon: "🌹", day: "Романтический настрой и поддержка.", month: "Месяц красивых поступков и гармонии." },
-            { name: "Королева Кубков", icon: "👑", day: "Слушайте свое сердце и интуицию.", month: "Месяц эмоциональной чуткости и заботы." },
-            { name: "Король Кубков", icon: "🔱", day: "Сохраняйте внутреннее спокойствие.", month: "Месяц мудрости и эмоционального баланса." },
-
-            // --- МЕЧИ (14) ---
-            { name: "Туз Мечей", icon: "🗡️", day: "Ясность ума и окончательный вывод.", month: "Месяц интеллектуальных прорывов и правды." },
-            { name: "2 Мечей", icon: "🙈", day: "Взвесьте за и против перед выбором.", month: "Месяц поиска компромисса и баланса." },
-            { name: "3 Мечей", icon: "💔", day: "Будьте мягче к себе, берегите нервы.", month: "Месяц исцеления старых душевных ран." },
-            { name: "4 Мечей", icon: "🛌", day: "Отдохните и восстановите силы.", month: "Месяц спокойной паузы и накопления энергии." },
-            { name: "5 Мечей", icon: "🥀", day: "Избегайте бессмысленных споров.", month: "Месяц усвоения важного жизненного урока." },
-            { name: "6 Мечей", icon: "⛵", day: "Спокойный переезд или смена обстановки.", month: "Месяц перехода к более светлым временам." },
-            { name: "7 Мечей", icon: "🦊", day: "Действуйте хитро и нестандартно.", month: "Месяц гибких и нестандартных решений." },
-            { name: "8 Мечей", icon: "🕸️", day: "Ограничения лишь в вашей голове.", month: "Месяц освобождения от страхов и зажимов." },
-            { name: "9 Мечей", icon: "😱", day: "Не накручивайте себя попусту.", month: "Месяц преодоления тревог и бессонных мыслей." },
-            { name: "10 Мечей", icon: "🌅", day: "Трудный период окончательно завершен.", month: "Месяц рассвета после долгой ночи." },
-            { name: "Паж Мечей", icon: "🔍", day: "Соберите максимум информации.", month: "Месяц учебы, аналитики и внимательности." },
-            { name: "Рыцарь Мечей", icon: "🌪️", day: "Быстрые действия без промедлений.", month: "Месяц решительных бросков к цели." },
-            { name: "Королева Мечей", icon: "❄️", day: "Опирайтесь только на логику.", month: "Месяц независимости и острого ума." },
-            { name: "Король Мечей", icon: "⚖️", day: "Примите строгое, но справедливое решение.", month: "Месяц порядка, структуры и авторитета." },
-
-            // --- ПЕНТАКЛИ (14) ---
-            { name: "Туз Пентаклей", icon: "🪙", day: "Отличный день для финансов и выгоды!", month: "Месяц прочного материального успеха." },
-            { name: "2 Пентаклей", icon: "🤹", day: "Успешное совмещение нескольких дел.", month: "Месяц гибкого управления бюджетом." },
-            { name: "3 Пентаклей", icon: "🛠️", day: "Продуктивная командная работа.", month: "Месяц роста профессионализма и навыков." },
-            { name: "4 Пентаклей", icon: "🏰", day: "Сохраняйте свои ресурсы в безопасности.", month: "Месяц финансовой стабильности и уюта." },
-            { name: "5 Пентаклей", icon: "🌧️", day: "Экономьте силы и финансы.", month: "Месяц переоценки материальных трат." },
-            { name: "6 Пентаклей", icon: "🎁", day: "Взаимная помощь, подарок или поддержка.", month: "Месяц щедрости, инвестиций и наград." },
-            { name: "7 Пентаклей", icon: "🌱", day: "Проявите терпение, плоды зреют.", month: "Месяц ожидания заслуженного результата." },
-            { name: "8 Пентаклей", icon: "🔨", day: "Отличный день для учебы и работы.", month: "Месяц мастерства и оттачивания навыков." },
-            { name: "9 Пентаклей", icon: "🦚", day: "Удовольствие от результатов труда.", month: "Месяц достатка, комфорта и успеха." },
-            { name: "10 Пентаклей", icon: "🏛️", day: "Стабильность и уверенность в будущем.", month: "Месяц семейного процветания и богатства." },
-            { name: "Паж Пентаклей", icon: "📚", day: "Перспективное практическое предложение.", month: "Месяц получения новых навыков и доходов." },
-            { name: "Рыцарь Пентаклей", icon: "🚜", day: "Надежное и последовательное движение.", month: "Месяц уверенного достижения целенаправленного успеха." },
-            { name: "Королева Пентаклей", icon: "🪴", day: "Забота о доме, здоровье и бюджете.", month: "Месяц уюта, стабильности и порядка." },
-            { name: "Король Пентаклей", icon: "👑", day: "Уверенный контроль финансовых вопросов.", month: "Месяц большого финансового успеха и авторитета." }
-        ];
-
-        let selectedPeriod = 'день';
-        let current4Cards = [];
-
-        function prepareCards() {
-            let shuffled = [...fullDeck].sort(() => 0.5 - Math.random());
-            current4Cards = shuffled.slice(0, 4);
-
-            const wrappers = document.querySelectorAll('.tarot-card-wrapper');
-            wrappers.forEach(w => w.classList.remove('flipped'));
-            document.getElementById('readingResult').style.display = 'none';
-        }
-
-        function setPeriod(period, btn) {
-            selectedPeriod = period;
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            prepareCards();
-        }
-
-        function revealCard(index, wrapper) {
-            if(wrapper.classList.contains('flipped')) return;
-
-            wrapper.classList.add('flipped');
-
-            const card = current4Cards[index];
-            const frontEl = document.getElementById(`cardFront${index}`);
-
-            frontEl.innerHTML = `
-                <div class="card-icon">${card.icon}</div>
-                <div class="card-title">${card.name}</div>
-            `;
-
-            const q = document.getElementById('userQuestion').value.trim();
-            const resBox = document.getElementById('readingResult');
-            
-            document.getElementById('resTitle').innerText = `✨ Ваш расклад на ${selectedPeriod}: ${card.name}`;
-            
-            let predictionText = selectedPeriod === 'день' ? card.day : card.month;
-            document.getElementById('resDesc').innerText = predictionText;
-
-            if(q !== "") {
-                document.getElementById('resAdvice').innerText = `Относительно вопроса «${q}»: Карта указывает, что решение придет через энергию этого аркана.`;
-            } else {
-                document.getElementById('resAdvice').innerText = "Совет: Примените мудрость этого аркана в сегодняшних делах!";
-            }
-
-            resBox.style.display = 'block';
-        }
-
-        prepareCards();
-    </script>
 
 </body>
 </html>
