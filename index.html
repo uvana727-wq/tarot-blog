@@ -4,11 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мистический Блог Таро</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-color: #090710;
+            --card-bg: rgba(26, 22, 43, 0.85);
+            --accent-gold: #f1c40f;
+            --text-color: #e0d9f6;
+            --text-muted: #a29bfe;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--accent-gold);
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .section-title {
+            color: var(--accent-gold);
+            border-bottom: 1px solid rgba(241, 196, 15, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-gold);
+            background: #0d0b18;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .spread-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card-flip-container {
+            width: 130px;
+            height: 210px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-flip-container.flipped .card-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #1f1738, #0d081e);
+            border: 2px dashed var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #2c1f4d, #160c2e);
+            border: 2px solid var(--accent-gold);
+            color: #fff;
+            transform: rotateY(180deg);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        }
+
+        .card-icon { font-size: 2.5rem; }
+
+        .card-result-title {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .daily-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .daily-card-box {
+            width: 150px;
+            height: 240px;
+            background: linear-gradient(135deg, #2a1b4e, #120a28);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .daily-icon { font-size: 3rem; }
+        .daily-desc { text-align: center; line-height: 1.6; }
+
+        .answer-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(241, 196, 15, 0.07);
+            border: 1px solid var(--accent-gold);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .sphere-block {
+            margin-bottom: 15px;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .sphere-title {
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 3px;
+        }
+
+        .reload-note {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            display: none;
+        }
+
+        .history-article h3 {
+            color: var(--accent-gold);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .history-article p, .history-article ul {
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .clear-btn {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .history-item {
+            background: rgba(13, 11, 24, 0.6);
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .history-item-title { color: var(--accent-gold); font-weight: bold; }
+        .history-item-q { font-style: italic; color: var(--text-muted); font-size: 0.9rem; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-
-    <div class="stars-bg"></div>
 
     <header>
         <h1>✨ Блог Таро ✨</h1>
@@ -30,78 +266,49 @@
 
         <div class="card-section">
             <h2 class="section-title">❓ Задай вопрос и выбери карту</h2>
-            <p>Сформулируй свой вопрос и нажми на одну из карт (доступен один выбор за сессию):</p>
+            <p>Сформулируй свой вопрос и нажми на одну из карт:</p>
             
             <input type="text" id="userQuestion" class="question-input" placeholder="Например: Что меня ждёт на этой неделе?">
 
             <div class="spread-grid">
                 <div class="card-flip-container" onclick="flipCard(1)">
-                    <div class="card-flip-inner" id="cardFlip1">
-                        <div class="card-front">
-                            <div class="card-back-pattern">🔮</div>
-                            <span>Карта 1</span>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon" id="icon1">✨</div>
-                            <div class="card-result-title" id="title1"></div>
-                        </div>
+                    <div class="card-flip-inner">
+                        <div class="card-front"><div style="font-size:2.5rem;">🔮</div><span>Карта 1</span></div>
+                        <div class="card-back"><div class="card-icon" id="icon1">✨</div><div class="card-result-title" id="title1"></div></div>
                     </div>
                 </div>
-
                 <div class="card-flip-container" onclick="flipCard(2)">
-                    <div class="card-flip-inner" id="cardFlip2">
-                        <div class="card-front">
-                            <div class="card-back-pattern">🔮</div>
-                            <span>Карта 2</span>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon" id="icon2">✨</div>
-                            <div class="card-result-title" id="title2"></div>
-                        </div>
+                    <div class="card-flip-inner">
+                        <div class="card-front"><div style="font-size:2.5rem;">🔮</div><span>Карта 2</span></div>
+                        <div class="card-back"><div class="card-icon" id="icon2">✨</div><div class="card-result-title" id="title2"></div></div>
                     </div>
                 </div>
-
                 <div class="card-flip-container" onclick="flipCard(3)">
-                    <div class="card-flip-inner" id="cardFlip3">
-                        <div class="card-front">
-                            <div class="card-back-pattern">🔮</div>
-                            <span>Карта 3</span>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon" id="icon3">✨</div>
-                            <div class="card-result-title" id="title3"></div>
-                        </div>
+                    <div class="card-flip-inner">
+                        <div class="card-front"><div style="font-size:2.5rem;">🔮</div><span>Карта 3</span></div>
+                        <div class="card-back"><div class="card-icon" id="icon3">✨</div><div class="card-result-title" id="title3"></div></div>
                     </div>
                 </div>
-
                 <div class="card-flip-container" onclick="flipCard(4)">
-                    <div class="card-flip-inner" id="cardFlip4">
-                        <div class="card-front">
-                            <div class="card-back-pattern">🔮</div>
-                            <span>Карта 4</span>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon" id="icon4">✨</div>
-                            <div class="card-result-title" id="title4"></div>
-                        </div>
+                    <div class="card-flip-inner">
+                        <div class="card-front"><div style="font-size:2.5rem;">🔮</div><span>Карта 4</span></div>
+                        <div class="card-back"><div class="card-icon" id="icon4">✨</div><div class="card-result-title" id="title4"></div></div>
                     </div>
                 </div>
             </div>
 
-            <div class="reload-note" id="reloadNote">
-                ✨ Вы уже сделали свой выбор. Для нового вопроса перезагрузите страницу. ✨
-            </div>
+            <div class="reload-note" id="reloadNote">✨ Вы уже сделали выбор. Перезагрузите страницу для нового вопроса. ✨</div>
 
             <div class="answer-box" id="answerBox">
-                <div class="user-q-display" id="userQDisplay"></div>
-                <h3 id="answerTitle">Полная Трактовка</h3>
+                <div id="userQDisplay" style="font-style:italic; color:var(--text-muted); margin-bottom:10px;"></div>
+                <h3 id="answerTitle" style="color:var(--accent-gold); margin-top:0;">Полная Трактовка</h3>
                 <div id="answerContent"></div>
             </div>
         </div>
 
         <div class="card-section">
             <h2 class="section-title">📜 История Раскладов</h2>
-            <div id="historyList" class="history-list">
+            <div id="historyList">
                 <p style="text-align: center; color: var(--text-muted);">История пока пуста.</p>
             </div>
             <button class="clear-btn" onclick="clearHistory()">Очистить историю</button>
@@ -109,52 +316,167 @@
 
         <div class="card-section history-article">
             <h2 class="section-title">📚 Полная История и Тайны Карт Таро</h2>
+            <h3>1. Зарождение: Италия XV века</h3>
+            <p>Первые достоверные исторические упоминания карт Таро относятся к <strong>середине XV века (1430–1450 гг.) в Северной Италии</strong> (Милан, Болонья, Феррара). Первоначально эти карты назывались <em>Carte da trionfi</em> (карты триумфов) и использовались как светская карточная игра для знати.</p>
             
-            <h3>1. Зарождение: Аристократическая игра эпохи Возрождения</h3>
-            <p>
-                Вопреки популярным мифам о древнем Египте или Атлантиде, первые достоверные исторические упоминания карт Таро относятся к <strong>середине XV века (1430–1450 гг.) в Северной Италии</strong> (Милан, Болонья, Феррара). Первоначально эти карты назывались <em>«Carte da trionfi»</em> (карты триумфов), а позже — <em>«Tarocchi»</em>.
-            </p>
-            <p>
-                В тот период Таро использовалось исключительно как светская карточная игра для знати, напоминающая современный бридж. Самая известная сохранившаяся колода того времени — <strong>Таро Висконти-Сфорца</strong>, созданная художником Бонифацио Бембо по заказу миланских герцогов. Карты расписывались вручную с использованием золотого листа и сложной иконографии того времени.
-            </p>
-
             <h3>2. Превращение в предсказательную систему (XVIII век)</h3>
-            <p>
-                Первый переход Таро от салонной игры к эзотерике произошёл во Франции в XVIII веке. В 1781 году французский священник и масон <strong>Антуан Кур де Жебелен</strong> опубликовал исследование, где заявил, что Таро — это уцелевшая «Священная Книга Тота», созданная древнеегипетскими жрецами для сохранения тайных знаний.
-            </p>
-            <p>
-                Вскоре после этого профессиональный гадатель <strong>Жан-Батист Альетт (под псевдонимом Эттейлла)</strong> в 1789 году создал первую специализированную колоду для гадания и опубликовал руководство по трактовке каждой карты, сделав Таро доступным широкой публике.
-            </p>
+            <p>В 1781 году французский исследователь <strong>Антуан Кур де Жебелен</strong> заявил, что Таро — это уцелевшая «Священная Книга Тота», созданная древнеегипетскими жрецами. Вскоре Жан-Батист Альетт (Эттейлла) создал первую специальную колоду для гаданий.</p>
 
-            <h3>3. Золотой Век Эзотерики и Великие Системы (XIX–XX века)</h3>
-            <p>
-                В XIX веке французский оккультист <strong>Элифас Леви</strong> связал 22 Старших Аркана Таро с 22 буквами еврейского алфавита и Каббалой, заложив основу западной оккультной традиции.
-            </p>
-            <p>
-                Настоящий прорыв в мире Таро произошёл в 1909 году, когда член британского ордена «Золотая Заря» <strong>Артур Эдвард Уэйт</strong> и художница <strong>Памела Колман Смит</strong> создали колоду <strong>Таро Райдера-Уэйта</strong>. Главным новшеством стало то, что Смит иллюстрировала сюжетами не только Старшие, но и все 56 Младших Арканов, что сделало интуитивное считывание карт доступным абсолютно всем.
-            </p>
+            <h3>3. Система Райдера-Уэйта (1909 год)</h3>
+            <p>В 1909 году <strong>Артур Эдвард Уэйт</strong> и художница <strong>Памела Колман Смит</strong> создали знаменитую колоду Таро Райдера-Уэйта, где впервые проиллюстрировали все 78 карт уникальными сюжетами.</p>
 
-            <h3>4. Анатомия и Структура Колоды (78 Карт)</h3>
-            <p>Классическая колода Таро строго структурирована и состоит из двух ключевых разделов:</p>
+            <h3>4. Структура (78 карт)</h3>
             <ul>
-                <li><strong>22 Старших Аркана (Великие Тайны):</strong> Отражают архетипы человеческого опыта, жизненные уроки и ключевые судьбоносные этапы («Путешествие Дурака» от 0. Шута до XXI. Мира).</li>
-                <li><strong>56 Младших Арканов (Малые Тайны):</strong> Описывают повседневные ситуации, эмоции и действия. Они делятся на 4 масти:
-                    <ul>
-                        <li>🔥 <strong>Жезлы (Огонь):</strong> Энергия, страсть, карьера, воля и новые идеи.</li>
-                        <li>🏆 <strong>Кубки (Вода):</strong> Эмоции, любовь, интуиция, отношения и творчество.</li>
-                        <li>🗡️ <strong>Мечи (Воздух):</strong> Интеллект, мысли, решения, конфликты и правда.</li>
-                        <li>🪙 <strong>Пентакли (Земля):</strong> Деньги, материальные ресурсы, здоровье и физический мир.</li>
-                    </ul>
-                </li>
+                <li><strong>22 Старших Аркана:</strong> Показывают главные жизненные уроки и судьбоносные этапы.</li>
+                <li><strong>56 Младших Арканов:</strong> Описывают повседневные дела через 4 масти (Жезлы 🔥, Кубки 🏆, Мечи 🗡️, Пентакли 🪙).</li>
             </ul>
         </div>
 
     </div>
 
     <footer>
-        <p>© 2026 Блог Таро | Создано с помощью Termux & GitHub</p>
+        <p>© 2026 Блог Таро | Termux & GitHub</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        let hasDrawn = false;
+
+        const majorArcanaData = [
+            { name: "0. Шут", icon: "🎒", gen: "Начало нового пути, чистый лист.", love: "Спонтанные чувства, флирт.", work: "Креативный проект, риск.", fut: "Неожиданный поворот судьбы." },
+            { name: "I. Маг", icon: "🪄", gen: "Мастерство, воля, воплощение мечты.", love: "Лидерство, сильное притяжение.", work: "Успех в переговорах.", fut: "Время для решительных шагов." },
+            { name: "II. Жрица", icon: "🌙", gen: "Интуиция, тайны, мудрость.", love: "Скрытые чувства, духовная связь.", work: "Время наблюдать.", fut: "Доверяйте внутреннему голосу." },
+            { name: "III. Императрица", icon: "👑", gen: "Изобилие, процветание.", love: "Гармония, создание семьи.", work: "Рост и стабильный доход.", fut: "Плодотворный период." },
+            { name: "IV. Император", icon: "🏛️", gen: "Порядок, авторитет.", love: "Стабильный, надежный союз.", work: "Укрепление позиций.", fut: "Ситуация под контролем." },
+            { name: "XVII. Звезда", icon: "⭐", gen: "Надежда, вдохновение.", love: "Мечты о совместном будущем.", work: "Перспективные проекты.", fut: "Мечта скоро осуществится." },
+            { name: "XIX. Солнце", icon: "☀️", gen: "Радость, триумф, успех.", love: "Искреннее счастье.", work: "Признание и отличный доход.", fut: "Яркая и успешная полоса." },
+            { name: "XXI. Мир", icon: "🌍", gen: "Завершение, гармония.", love: "Полное взаимопонимание.", work: "Завершение крупного проекта.", fut: "Достижение главной цели." }
+        ];
+
+        const suits = [
+            { name: "Жезлов", icon: "🔥", theme: "энергия, идеи" },
+            { name: "Кубков", icon: "🏆", theme: "чувства, отношения" },
+            { name: "Мечей", icon: "🗡️", theme: "мысли, решения" },
+            { name: "Пентаклей", icon: "🪙", theme: "деньги, стабильность" }
+        ];
+
+        const ranks = [
+            { r: "Туз", gen: "Мощный импульс и возможность.", love: "Вспышка чувств.", work: "Отличный шанс.", fut: "Новая дверь." },
+            { r: "Король", gen: "Авторитет и лидерство.", love: "Надежность.", work: "Высокий статус.", fut: "Сильное положение." }
+        ];
+
+        const full78Deck = [...majorArcanaData.map(c => ({
+            name: c.name, icon: c.icon, general: c.gen, love: c.love, work: c.work, future: c.fut
+        }))];
+
+        suits.forEach(s => {
+            ranks.forEach(r => {
+                full78Deck.push({
+                    name: `${r.r} ${s.name}`,
+                    icon: s.icon,
+                    general: `${r.gen} Сфера: ${s.theme}.`,
+                    love: r.love,
+                    work: r.work,
+                    future: r.fut
+                });
+            });
+        });
+
+        function initDailyCard() {
+            const today = new Date();
+            const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            const cardIndex = dateSeed % majorArcanaData.length;
+            const card = majorArcanaData[cardIndex];
+
+            document.getElementById('dailyIcon').innerText = card.icon;
+            document.getElementById('dailyTitle').innerText = card.name;
+            document.getElementById('dailyDescription').innerText = card.gen;
+        }
+
+        function flipCard(cardNumber) {
+            if (hasDrawn) return;
+            hasDrawn = true;
+
+            const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
+            const userQ = document.getElementById('userQuestion').value.trim();
+
+            const randomIndex = Math.floor(Math.random() * full78Deck.length);
+            const card = full78Deck[randomIndex];
+
+            document.getElementById(`icon${cardNumber}`).innerText = card.icon;
+            document.getElementById(`title${cardNumber}`).innerText = card.name;
+
+            cardContainer.classList.add('flipped');
+            document.getElementById('userQuestion').disabled = true;
+            document.getElementById('reloadNote').style.display = 'block';
+
+            const currentReading = {
+                question: userQ || "Без вопроса",
+                cardName: card.name,
+                cardIcon: card.icon,
+                general: card.general,
+                date: new Date().toLocaleDateString('ru-RU')
+            };
+
+            setTimeout(() => {
+                const answerBox = document.getElementById('answerBox');
+                const userQDisplay = document.getElementById('userQDisplay');
+                const answerContent = document.getElementById('answerContent');
+
+                if (userQ !== "") {
+                    userQDisplay.innerText = `Ваш вопрос: «${userQ}»`;
+                    userQDisplay.style.display = 'block';
+                } else {
+                    userQDisplay.style.display = 'none';
+                }
+
+                answerContent.innerHTML = `
+                    <div class="sphere-block"><div class="sphere-title">✨ Общее значение:</div><div>${card.general}</div></div>
+                    <div class="sphere-block"><div class="sphere-title">❤️ В любви:</div><div>${card.love}</div></div>
+                    <div class="sphere-block"><div class="sphere-title">💼 В карьере:</div><div>${card.work}</div></div>
+                    <div class="sphere-block"><div class="sphere-title">🔮 Совет:</div><div>${card.future}</div></div>
+                `;
+
+                document.getElementById('answerTitle').innerText = `Выпала карта №${cardNumber}: ${card.name}`;
+                answerBox.style.display = 'block';
+
+                saveToHistory(currentReading);
+            }, 400);
+        }
+
+        function saveToHistory(item) {
+            let history = JSON.parse(localStorage.getItem('tarotHistory')) || [];
+            history.unshift(item);
+            localStorage.setItem('tarotHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            let history = JSON.parse(localStorage.getItem('tarotHistory')) || [];
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historyList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">История пока пуста.</p>`;
+                return;
+            }
+
+            historyList.innerHTML = history.slice(0, 5).map(item => `
+                <div class="history-item">
+                    <div class="history-item-title">${item.cardIcon} ${item.cardName} (${item.date})</div>
+                    <div class="history-item-q">Вопрос: "${item.question}"</div>
+                    <div style="font-size:0.85rem; margin-top:5px;">${item.general}</div>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('tarotHistory');
+            renderHistory();
+        }
+
+        window.onload = function() {
+            initDailyCard();
+            renderHistory();
+        };
+    </script>
 </body>
 </html>
