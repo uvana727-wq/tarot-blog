@@ -1,4 +1,5 @@
 let hasDrawn = false;
+let currentReading = null;
 
 // 22 Старших Аркана
 const majorArcanaData = [
@@ -24,7 +25,6 @@ const ranks = [
     { r: "Король", gen: "Авторитет, лидерство, успех.", love: "Надежное плечо, ответственность.", work: "Высокий статус, победа.", fut: "Стабильное и сильное положение." }
 ];
 
-// Сборка всей колоды из 78 карт
 const full78Deck = [...majorArcanaData.map(c => ({
     name: c.name, icon: c.icon, general: c.gen, love: c.love, work: c.work, future: c.fut
 }))];
@@ -42,7 +42,6 @@ suits.forEach(s => {
     });
 });
 
-// Карта дня
 function initDailyCard() {
     const today = new Date();
     const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -54,7 +53,6 @@ function initDailyCard() {
     document.getElementById('dailyDescription').innerText = card.gen;
 }
 
-// 3D Переворот по клику
 function flipCard(cardNumber) {
     if (hasDrawn) return;
     hasDrawn = true;
@@ -62,22 +60,25 @@ function flipCard(cardNumber) {
     const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
     const userQ = document.getElementById('userQuestion').value.trim();
 
-    // Случайная карта
     const randomIndex = Math.floor(Math.random() * full78Deck.length);
     const card = full78Deck[randomIndex];
 
-    // Подставляем данные на обратную сторону
     document.getElementById(`icon${cardNumber}`).innerText = card.icon;
     document.getElementById(`title${cardNumber}`).innerText = card.name;
 
-    // Переворачиваем карту с анимацией
     cardContainer.classList.add('flipped');
 
-    // Блокируем ввод
     document.getElementById('userQuestion').disabled = true;
     document.getElementById('reloadNote').style.display = 'block';
 
-    // Заполняем результат
+    currentReading = {
+        question: userQ || "Без вопроса",
+        cardName: card.name,
+        cardIcon: card.icon,
+        general: card.general,
+        date: new Date().toLocaleDateString('ru-RU')
+    };
+
     setTimeout(() => {
         const answerBox = document.getElementById('answerBox');
         const userQDisplay = document.getElementById('userQDisplay');
@@ -111,7 +112,72 @@ function flipCard(cardNumber) {
 
         document.getElementById('answerTitle').innerText = `Выпала карта №${cardNumber}: ${card.name}`;
         answerBox.style.display = 'block';
+
+        saveToHistory(currentReading);
     }, 400);
 }
 
-window.onload = initDailyCard;
+// РАБОТА С ПАМЯТЬЮ (Local Storage)
+
+function saveToHistory(item) {
+    let history = JSON.parse(localStorage.getItem('tarotHistory')) || [];
+    history.unshift(item);
+    localStorage.setItem('tarotHistory', JSON.stringify(history));
+    renderHistory();
+}
+
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('tarotHistory')) || [];
+    const historyList = document.getElementById('historyList');
+
+    if (history.length === 0) {
+        historyList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">История пока пуста.</p>`;
+        return;
+    }
+
+    historyList.innerHTML = history.slice(0, 5).map(item => `
+        <div class="history-item">
+            <div class="history-item-title">${item.cardIcon} ${item.cardName} (${item.date})</div>
+            <div class="history-item-q">Вопрос: "${item.question}"</div>
+            <div style="font-size:0.85rem; margin-top:5px;">${item.general}</div>
+        </div>
+    `).join('');
+}
+
+function saveToFavorites() {
+    if (!currentReading) return;
+    let favs = JSON.parse(localStorage.getItem('tarotFavs')) || [];
+    favs.unshift(currentReading);
+    localStorage.setItem('tarotFavs', JSON.stringify(favs));
+    renderFavorites();
+    alert('⭐ Расклад сохранён в Любимые!');
+}
+
+function renderFavorites() {
+    let favs = JSON.parse(localStorage.getItem('tarotFavs')) || [];
+    const favsList = document.getElementById('favoritesList');
+
+    if (favs.length === 0) {
+        favsList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">У вас пока нет сохранённых раскладов.</p>`;
+        return;
+    }
+
+    favsList.innerHTML = favs.map(item => `
+        <div class="history-item">
+            <div class="history-item-title">${item.cardIcon} ${item.cardName} (${item.date})</div>
+            <div class="history-item-q">Вопрос: "${item.question}"</div>
+            <div style="font-size:0.85rem; margin-top:5px;">${item.general}</div>
+        </div>
+    `).join('');
+}
+
+function clearHistory() {
+    localStorage.removeItem('tarotHistory');
+    renderHistory();
+}
+
+window.onload = function() {
+    initDailyCard();
+    renderHistory();
+    renderFavorites();
+};

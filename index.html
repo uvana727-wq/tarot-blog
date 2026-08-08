@@ -96,7 +96,23 @@
                 <div class="user-q-display" id="userQDisplay"></div>
                 <h3 id="answerTitle">Полная Трактовка</h3>
                 <div id="answerContent"></div>
+                <button class="save-btn" onclick="saveToFavorites()">⭐ Сохранить в Любимые</button>
             </div>
+        </div>
+
+        <div class="card-section">
+            <h2 class="section-title">⭐ Мои Любимые Расклады</h2>
+            <div id="favoritesList" class="history-list">
+                <p style="text-align: center; color: var(--text-muted);">У вас пока нет сохранённых раскладов.</p>
+            </div>
+        </div>
+
+        <div class="card-section">
+            <h2 class="section-title">📜 История Раскладов</h2>
+            <div id="historyList" class="history-list">
+                <p style="text-align: center; color: var(--text-muted);">История пока пуста.</p>
+            </div>
+            <button class="clear-btn" onclick="clearHistory()">Очистить историю</button>
         </div>
 
     </div>
