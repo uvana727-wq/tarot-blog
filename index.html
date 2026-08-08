@@ -66,19 +66,11 @@
             line-height: 1.6;
         }
 
-        ul {
-            line-height: 1.6;
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        /* Анимация карты */
+        /* Блок Карта Дня */
         .tarot-card-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             margin: 20px 0;
         }
 
@@ -107,6 +99,52 @@
             margin-top: 10px;
             font-weight: bold;
             color: var(--accent-gold);
+            text-align: center;
+        }
+
+        /* Сетка для 4 карт */
+        .spread-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interactive-card {
+            width: 130px;
+            height: 220px;
+            background: linear-gradient(135deg, #150d2a, #2c2243);
+            border: 2px dashed var(--accent-gold);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.4);
+            border-style: solid;
+        }
+
+        .interactive-card .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .answer-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(243, 156, 18, 0.05);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 4px;
+            display: none;
         }
 
         @keyframes float {
@@ -132,10 +170,43 @@
 
     <div class="container">
         
-        <div class="tarot-card-container">
-            <div class="tarot-card">
-                <img src="star.jpg" alt="Карта Звезда" onerror="this.style.display='none'">
-                <div class="card-title">⭐ Звезда</div>
+        <div class="card-section">
+            <h2 style="text-align: center;">🔮 Карта Сегодняшнего Дня</h2>
+            <div class="tarot-card-container">
+                <div class="tarot-card">
+                    <div id="dailyIcon" style="font-size: 3rem;">⭐</div>
+                    <div class="card-title" id="dailyTitle">Загрузка...</div>
+                </div>
+            </div>
+            <p id="dailyDescription" style="text-align: center;">Загрузка астрологического прогноза...</p>
+        </div>
+
+        <div class="card-section">
+            <h2>❓ Задай свой вопрос Таро</h2>
+            <p>Загадай волнующий вопрос, сосредоточься на нем и выбери одну из четырёх карт ниже:</p>
+            
+            <div class="spread-grid">
+                <div class="interactive-card" onclick="askQuestion(1)">
+                    <div class="card-icon" id="icon1">🎴</div>
+                    <div id="title1" style="font-size: 0.85rem; margin-top: 5px;">Карта 1</div>
+                </div>
+                <div class="interactive-card" onclick="askQuestion(2)">
+                    <div class="card-icon" id="icon2">🎴</div>
+                    <div id="title2" style="font-size: 0.85rem; margin-top: 5px;">Карта 2</div>
+                </div>
+                <div class="interactive-card" onclick="askQuestion(3)">
+                    <div class="card-icon" id="icon3">🎴</div>
+                    <div id="title3" style="font-size: 0.85rem; margin-top: 5px;">Карта 3</div>
+                </div>
+                <div class="interactive-card" onclick="askQuestion(4)">
+                    <div class="card-icon" id="icon4">🎴</div>
+                    <div id="title4" style="font-size: 0.85rem; margin-top: 5px;">Карта 4</div>
+                </div>
+            </div>
+
+            <div class="answer-box" id="answerBox">
+                <h3 id="answerTitle" style="color: var(--accent-gold); margin-top: 0;">Ответ Таро:</h3>
+                <p id="answerText"></p>
             </div>
         </div>
 
@@ -144,32 +215,17 @@
             <p>
                 История карт Таро — это увлекательное путешествие сквозь века, полное трансформирующихся смыслов, мифов и философских концепций. За несколько столетий Таро прошли путь от светского развлечения знати до сложно устроенной системы предсказаний и психологического анализа.
             </p>
-            
             <p>
                 <strong>1. Зарождение в эпохе Возрождения (XV век)</strong><br>
-                Вопреки популярным легендам об их древнеегипетском или цыганском происхождении, первые задокументированные колоды появились в Италии в 1430-х годах. Знаменитые семьи, такие как Висконти и Сфорца, заказывали у художников роскошные иллюминированные колоды, расписанные сусальным золотом. В то время эти карты назывались <em>Carte da trionfi</em> («Карты триумфов») и использовались для элитарной игры *Tarocchi*, напоминающей современный бридж.
+                Первые задокументированные колоды появились в Италии в 1430-х годах (Висконти-Сфорца) и использовались для игры в <em>Tarocchi</em>.
             </p>
-
             <p>
-                <strong>2. Оккультный поворот и Эра Просвещения (XVIII век)</strong><br>
-                Лишь к концу XVIII века во Франции карты приобрели сакральный и мистический подтекст. Французский исследователь Антуан Кур де Жебелен выдвинул гипотезу, что 22 Старших Аркана — это уцелевшие страницы «Книги Тота», содержащей тайные знания древнеегипетских жрецов. За ним последовал Эттейлла (Жан-Батист Альетт), который создал первую в истории специализированную колоду для гадания и сделал предсказания на Таро своей профессией.
+                <strong>2. Оккультный поворот (XVIII век)</strong><br>
+                Французские исследователи разглядели в картах древний символизм, и Эттейлла создал первую колоду для предсказаний.
             </p>
-
             <p>
-                <strong>3. Эзотерический расцвет и Орден Золотой Зари (XX век)</strong><br>
-                Настоящий прорыв в символизме Таро произошел в начале XX века благодаря британскому эзотерическому обществу «Орден Золотой Зари». В 1909 году оккультист Артур Эдвард Уэйт и художница Памела Колман Смит выпустили революционную колоду — **Таро Райдера-Уэйта**. Ее главная инновация заключалась в том, что сюжетные иллюстрации получили не только Старшие, но и Младшие Арканы, что сделало чтение символов доступным для каждого.
-            </p>
-
-            <p>
-                <strong>4. Современность и психология (XXI век)</strong><br>
-                В наши дни Таро вышли далеко за рамки классического гадания. Знаменитый психоаналитик Карл Густав Юнг рассматривал символы Арканов как архетипы коллективного бессознательного. Сегодня карты используются как инструмент для саморефлексии, медитации, поиска творческого вдохновения и глубокой работы с подсознанием.
-            </p>
-        </div>
-
-        <div class="card-section">
-            <h2>🔮 Карта Дня: Звезда</h2>
-            <p>
-                Карта <strong>«Звезда»</strong> символизирует надежду, вдохновение, гармонию и веру в лучшее будущее. Она напоминает о том, что после любой бури наступает период спокойствия и исцеления.
+                <strong>3. Орден Золотой Зари (XX век)</strong><br>
+                В 1909 году Артур Уэйт и Памела Колман Смит создали знаменитую колоду **Райдера-Уэйта** с прорисованными сюжетными Младшими Арканами.
             </p>
         </div>
 
@@ -179,5 +235,74 @@
         <p>© 2026 Блог Таро | Создано с помощью Termux & GitHub</p>
     </footer>
 
+    <script>
+        // 22 Старших Аркана
+        const majorArcana = [
+            { name: "0. Шут", icon: "🎒", desc: "Сегодня день чистых начинаний и доверия к судьбе. Не бойтесь сделать шаг в неизвестное." },
+            { name: "I. Маг", icon: "🪄", desc: "У вас есть все ресурсы, чтобы реализовать задуманное. Проявите волю!" },
+            { name: "II. Жрица", icon: "🌙", desc: "День интуиции и тайн. Слушайте свой внутренний голос и не торопите события." },
+            { name: "III. Императрица", icon: "👑", desc: "Время изобилия, гармонии и творческого роста." },
+            { name: "IV. Император", icon: "🏛️", desc: "День порядка, дисциплины и уверенных решений." },
+            { name: "V. Иерофант", icon: "📜", desc: "Время обращений к мудрости, учебе и традиционным ценностям." },
+            { name: "VI. Влюбленные", icon: "💖", desc: "Предстоит сделать важный выбор, слушая свое сердце." },
+            { name: "VII. Колесница", icon: "⚔️", desc: "Уверенное движение вперед и преодоление любых препятствий." },
+            { name: "VIII. Сила", icon: "🦁", desc: "Мягкая сила, терпенье и контроль над эмоциями принесут победу." },
+            { name: "IX. Отшельник", icon: "🕯️", desc: "Время уединения, переосмысления и поиска истины внутри себя." },
+            { name: "X. Колесо Фортуны", icon: "🎡", desc: "Удача на вашей стороне, перемены неизбежны." },
+            { name: "XI. Справедливость", icon: "⚖️", desc: "Баланс, объективность и честность во всем." },
+            { name: "XII. Повешенный", icon: "🧘", desc: "Взгляните на ситуацию под новым углом." },
+            { name: "XIII. Смерть", icon: "🦋", desc: "Завершение старого этапа и трансформационный переход к новому." },
+            { name: "XIV. Умеренность", icon: "🍷", desc: "Гармония, спокойствие и поиск золотой середины." },
+            { name: "XV. Дьявол", icon: "🔗", desc: "Будьте внимательны к соблазнам и зависимостям." },
+            { name: "XVI. Башня", icon: "⚡", desc: "Внезапные прозрения и разрушение старых иллюзий." },
+            { name: "XVII. Звезда", icon: "⭐", desc: "Свет надежды, исцеление и верность своим мечтам." },
+            { name: "XVIII. Луна", icon: "Создание", desc: "Иллюзии и скрытые мотивы. Доверяйте интуиции, но проверяйте факты." },
+            { name: "XIX. Солнце", icon: "☀️", desc: "Ясность, радость, триумф и энергия!" },
+            { name: "XX. Суд", icon: "🎺", desc: "Пробуждение, подведение итогов и новое призвание." },
+            { name: "XXI. Мир", icon: "🌍", desc: "Завершение цикла, гармония и полное достижение цели." }
+        ];
+
+        // 78 Карточная колода (для гадания)
+        const fullDeck = [
+            ...majorArcana,
+            { name: "Туз Жезлов", icon: "🔥", desc: "Мощный импульс, вдохновение и новая идея для вашего вопроса." },
+            { name: "Туз Кубков", icon: "🏆", desc: "Искренние эмоции, любовь и наполненность в ответе на ваш вопрос." },
+            { name: "Туз Мечей", icon: "🗡️", desc: "Ясность ума, честное решение и прорыв через сложности." },
+            { name: "Туз Пентаклей", icon: "🪙", desc: "Материальный успех, шанс на выгоду и надежная опора." },
+            { name: "Десятка Кубков", icon: "🌈", desc: "Полная семейная гармония и счастье в загаданной сфере." },
+            { name: "Тройка Жезлов", icon: "⛵", desc: "Перспективы открыты, время расширять горизонты." },
+            { name: "Пятерка Пентаклей", icon: "❄️", desc: "Временные трудности, требующие экономии сил." },
+            { name: "Восьмерка Жезлов", icon: "🚀", desc: "События будут развиваться очень стремительно!" }
+        ];
+
+        // Алгоритм Карты Дня (обновляется раз в сутки)
+        function initDailyCard() {
+            const today = new Date();
+            const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            const cardIndex = dateSeed % majorArcana.length;
+            const card = majorArcana[cardIndex];
+
+            document.getElementById('dailyIcon').innerText = card.icon;
+            document.getElementById('dailyTitle').innerText = card.name;
+            document.getElementById('dailyDescription').innerText = card.desc;
+        }
+
+        // Логика выбора из 4 карт
+        function askQuestion(cardNumber) {
+            const randomIndex = Math.floor(Math.random() * fullDeck.length);
+            const drawnCard = fullDeck[randomIndex];
+
+            document.getElementById(`icon${cardNumber}`).innerText = drawnCard.icon;
+            document.getElementById(`title${cardNumber}`).innerText = drawnCard.name;
+
+            const answerBox = document.getElementById('answerBox');
+            answerBox.style.display = 'block';
+            document.getElementById('answerTitle').innerText = `Карта №${cardNumber}: ${drawnCard.name}`;
+            document.getElementById('answerText').innerText = drawnCard.desc;
+        }
+
+        // Запуск при загрузке
+        window.onload = initDailyCard;
+    </script>
 </body>
 </html>
