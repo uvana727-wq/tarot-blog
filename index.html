@@ -314,6 +314,30 @@
             <button class="clear-btn" onclick="clearHistory()">Очистить историю</button>
         </div>
 
+        <div class="card-section">
+            <h2 class="section-title">📖 Справочник всех 78 Карт Таро</h2>
+            <p>Выберите категорию и карту, чтобы узнать её значение:</p>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="filterCategory" onchange="updateCardDropdown()" class="question-input" style="margin-bottom:0; flex:1;">
+                    <option value="all">Все карты (78)</option>
+                    <option value="major">Старшие Арканы (22)</option>
+                    <option value="Жезлов">Масть Жезлов 🔥</option>
+                    <option value="Кубков">Масть Кубков 🏆</option>
+                    <option value="Мечей">Масть Мечей 🗡️</option>
+                    <option value="Пентаклей">Масть Пентаклей 🪙</option>
+                </select>
+
+                <select id="cardSelect" onchange="showSelectedCardInfo()" class="question-input" style="margin-bottom:0; flex:2;">
+                    </select>
+            </div>
+
+            <div id="cardInfoDisplay" style="display:none; background: rgba(13, 11, 24, 0.8); padding: 15px; border-radius: 10px; border: 1px solid var(--accent-gold);">
+                <h3 id="infoCardTitle" style="color:var(--accent-gold); margin-top:0;"></h3>
+                <p id="infoCardDesc"></p>
+            </div>
+        </div>
+
         <div class="card-section history-article">
             <h2 class="section-title">📚 Полная История и Тайны Карт Таро</h2>
             <h3>1. Зарождение: Италия XV века</h3>
