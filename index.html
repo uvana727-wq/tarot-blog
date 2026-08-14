@@ -431,38 +431,7 @@
 
                 // Магический звук
                 try {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (AudioContext) {
-                        const audioCtx = new AudioContext();
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-                        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
-
-                        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-
-                        osc.start();
-                        osc.stop(audioCtx.currentTime + 0.3);
-                    }
-                } catch (e) {}
-
-                const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
-                const userQ = document.getElementById('userQuestion').value.trim();
-
-                const randomIndex = Math.floor(Math.random() * full78Deck.length);
-                const card = full78Deck[randomIndex];
-
-                document.getElementById(`icon${cardNumber}`).innerText = card.icon;
-                document.getElementById(`title${cardNumber}`).innerText = card.name;
-
-                cardContainer.classList.add('flipped');
-                document.getElementById('userQuestion').disabled = true;
+                 document.getElementById('userQuestion').disabled = true;
                 document.getElementById('reloadNote').style.display = 'block';
 
                 const currentReading = {
@@ -498,7 +467,6 @@
                     saveToHistory(currentReading);
                 }, 400);
             }
-
 
             const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
             const userQ = document.getElementById('userQuestion').value.trim();
@@ -580,7 +548,7 @@
         window.onload = function() {
             initDailyCard();
             renderHistory();
-        };
+	        };
     </script>
 </body>
 </html>
