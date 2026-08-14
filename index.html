@@ -546,9 +546,10 @@
         }
 
         window.onload = function() {
-            initDailyCard();
-            renderHistory();
-	        };
+            if (typeof initDailyCard === 'function') initDailyCard();
+            if (typeof renderHistory === 'function') renderHistory();
+            if (typeof updateCardDropdown === 'function') updateCardDropdown();
+        };
     </script>
 </body>
 </html>
