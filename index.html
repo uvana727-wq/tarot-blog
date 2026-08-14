@@ -420,6 +420,86 @@
             if (hasDrawn) return;
             hasDrawn = true;
 
+            function flipCard(cardNumber) {
+                if (hasDrawn) return;
+                hasDrawn = true;
+
+                // Виброотклик
+                if (navigator.vibrate) {
+                    navigator.vibrate([30, 50, 30]);
+                }
+
+                // Магический звук
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        const audioCtx = new AudioContext();
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
+
+                        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+
+                        osc.start();
+                        osc.stop(audioCtx.currentTime + 0.3);
+                    }
+                } catch (e) {}
+
+                const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
+                const userQ = document.getElementById('userQuestion').value.trim();
+
+                const randomIndex = Math.floor(Math.random() * full78Deck.length);
+                const card = full78Deck[randomIndex];
+
+                document.getElementById(`icon${cardNumber}`).innerText = card.icon;
+                document.getElementById(`title${cardNumber}`).innerText = card.name;
+
+                cardContainer.classList.add('flipped');
+                document.getElementById('userQuestion').disabled = true;
+                document.getElementById('reloadNote').style.display = 'block';
+
+                const currentReading = {
+                    question: userQ || "Без вопроса",
+                    cardName: card.name,
+                    cardIcon: card.icon,
+                    general: card.general,
+                    date: new Date().toLocaleDateString('ru-RU')
+                };
+
+                setTimeout(() => {
+                    const answerBox = document.getElementById('answerBox');
+                    const userQDisplay = document.getElementById('userQDisplay');
+                    const answerContent = document.getElementById('answerContent');
+
+                    if (userQ !== "") {
+                        userQDisplay.innerText = `Ваш вопрос: «${userQ}»`;
+                        userQDisplay.style.display = 'block';
+                    } else {
+                        userQDisplay.style.display = 'none';
+                    }
+
+                    answerContent.innerHTML = `
+                        <div class="sphere-block"><div class="sphere-title">✨ Общее значение:</div><div>${card.general}</div></div>
+                        <div class="sphere-block"><div class="sphere-title">❤️ В любви:</div><div>${card.love}</div></div>
+                        <div class="sphere-block"><div class="sphere-title">💼 В карьере:</div><div>${card.work}</div></div>
+                        <div class="sphere-block"><div class="sphere-title">🔮 Совет:</div><div>${card.future}</div></div>
+                    `;
+
+                    document.getElementById('answerTitle').innerText = `Выпала карта №${cardNumber}: ${card.name}`;
+                    answerBox.style.display = 'block';
+
+                    saveToHistory(currentReading);
+                }, 400);
+            }
+
+
             const cardContainer = document.querySelectorAll('.card-flip-container')[cardNumber - 1];
             const userQ = document.getElementById('userQuestion').value.trim();
 
